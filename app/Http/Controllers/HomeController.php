@@ -23,6 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $date = date('l, m-F-Y');
+        $time = date('H:i:A');
+
+        return view('admin.index', compact('date', 'time'));
     }
 }
