@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Track;
 
 class TrackController extends Controller
 {
@@ -13,7 +14,15 @@ class TrackController extends Controller
      */
     public function index()
     {
-        //
+        // Displays the current date and time
+        $date = date('l, m-F-Y');
+        $time = date('H:i A');
+
+        //Fetch latest tracks from DB
+        $track = Track::latest()->paginate(10);
+
+        //Get total count of tracks
+        return view('track.index', compact('date', 'time', 'track', 'countTrack'));
     }
 
     /**
@@ -21,9 +30,13 @@ class TrackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function changeStatus(Request $request)
     {
-        //
+        $change = Track::find($request->id);
+        $change->status = $request->status;
+        $change->save();
+
+        return response()->json(['success'=>'Status change successfully.']);
     }
 
     /**
@@ -35,6 +48,16 @@ class TrackController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->validate([
+            'title' => ['required', 'unique:tracks', 'string'],
+            'track_status' =>'required'
+        ]);
+
+        Track::create([
+            'title' => $data['title'],
+            'status' => $data['track_status']
+        ]);
+            return back();
     }
 
     /**
@@ -43,10 +66,10 @@ class TrackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+    // public function show($id)
+    // {
+
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -54,10 +77,10 @@ class TrackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
+    // public function edit($id)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -66,10 +89,10 @@ class TrackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+    // public function update(Request $request, $id)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -79,6 +102,11 @@ class TrackController extends Controller
      */
     public function destroy($id)
     {
-        //
+         //Find Track ID and delete
+         Track::find($id)->delete($id);
+
+         return response()->json([
+             'success' => 'Record deleted successfully!'
+         ]);
     }
 }

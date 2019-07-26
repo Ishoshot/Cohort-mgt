@@ -27,12 +27,13 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
 </head>
 <body>
-    <div id="app">
-            <aside id="left-panel" class="left-panel">
+    <aside id="left-panel" class="left-panel">
         <nav class="navbar navbar-expand-sm navbar-default">
 
             <div class="navbar-header">
@@ -42,7 +43,7 @@
                 </button>
 
                  <a class="mt-3 name navbar-brand"  href="{{ url('/home') }}">
-                   {{ '() fofxAcademy' }}
+                   {{ '( ) fofxAcademy' }}
                 </a>
 
                  <p class="navbar-brand hidden">fofx</p>
@@ -58,7 +59,7 @@
                     <h3 class="menu-title">ACTIVITIES</h3><!-- /.menu-title -->
 
                     <li>
-                        <a href="/cohorts"> <i class="menu-icon fa fa-users"></i>Cohorts</a>
+                        <a href="/track"> <i class="menu-icon fa fa-users"></i>Manage Tracks</a>
                     </li>
 
                     <li>
@@ -70,7 +71,7 @@
                     </li>
 
                     <li>
-                            <a href="/pairs"> <i class="menu-icon fa fa-graduation-cap"></i>Pair Mapping </a>
+                        <a href="/pairs"> <i class="menu-icon fa fa-graduation-cap"></i>Pair Mapping </a>
                     </li>
 
                     <h3 class="menu-title">Extras</h3><!-- /.menu-title -->
@@ -90,14 +91,16 @@
                             </li>
                         </ul>
                     </li>
+
                 </ul>
+
             </div><!-- /.navbar-collapse -->
+
         </nav>
+
     </aside><!-- /#left-panel -->
 
-        {{--  <main class="py-4">  --}}
-            @yield('content')
-        {{--  </main>  --}}
-    </div>
+    @yield('content')
+
 </body>
 </html>

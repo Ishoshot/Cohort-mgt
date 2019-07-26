@@ -18,3 +18,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Track Routes
+Route::get('/track', 'TrackController@index');
+Route::Post('/track/create', 'TrackController@store');
+Route::get('/changeStatus', 'TrackController@changeStatus');
+Route::delete('/track/{id}', 'TrackController@destroy')->name('track.destroy');
+
+//
+
