@@ -41,7 +41,7 @@
                 </button>
 
                  <a class="mt-3 name navbar-brand"  href="{{ url('/home') }}">
-                   {{ '() fofxAcademy' }}
+                   {{ '( ) fofxAcademy' }}
                 </a>
 
                  <p class="navbar-brand hidden">fofx</p>

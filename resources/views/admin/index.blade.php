@@ -44,23 +44,16 @@
         </div>  {{--col-md-7--}}
 
         <div class="col-md-5">
-
             <div class="user-area dropdown float-right">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-user"></i>
+                <a class="dropdown-item nav-link" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                    <i class="fa fa-power-off"></i> {{ __('Logout') }}
                 </a>
 
-                <div class="user-menu dropdown-menu">
-                    <a class="dropdown-item nav-link" href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
-                        <i class="fa fa-power-off"></i> {{ __('Logout') }}
-                    </a>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </div>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </div>
 
         </div>
@@ -98,6 +91,63 @@
 
 
 <div class="content mt-3">
+
+<div class="col-md-12 text-center mb-2 mt-2">
+
+      <div class="card col-md-4 mt-5 p-3">
+        <div class="card-body bg-flat-color-0">
+          <div class="div-square">
+            <a href="#">
+            <i class="fa fa-users fa-5x"></i>
+            <h4 class="pt-4">COHORTS</h4>
+            </a>
+            <div class="progress progress-xs mt-3 mb-0 bg-flat-color-1" style="width: 40%; height: 5px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card col-md-4 mt-5 p-3">
+        <div class="card-body bg-flat-color-0">
+          <div class="div-square">
+            <a href="/topics">
+            <i class="fa fa-list fa-5x"></i>
+            <h4 class="pt-4">MANAGE TOPICS</h4>
+            </a>
+            <div class="progress progress-xs mt-3 mb-0 bg-flat-color-5" style="width: 60%; height: 5px;"></div>
+          </div>
+      </div>
+      </div>
+
+      <div class="card col-md-4 mt-5 p-3">
+        <div class="card-body bg-flat-color-0">
+          <div class="div-square">
+            <a href="#">
+            <i class="fa fa-graduation-cap fa-5x"></i>
+            <h4 class="pt-4">PAIR MAPPING</h4>
+            </a>
+            <div class="progress progress-xs mt-3 mb-0 bg-flat-color-3" style="width: 80%; height: 5px;"></div>
+          </div>
+      </div>
+      </div>
+
+</div>
+
+<div class="col-md-12 text-center mt-2 mb-2">
+
+    <div class="card col-md-4 mt-5 p-3">
+        <div class="card-body bg-flat-color-0">
+            <div class="div-square">
+                <a href="/students">
+                    <i class="fa fa-user fa-5x"></i>
+                    <h4 class="pt-4">MANAGE STUDENTS</h4>
+                </a>
+                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-4" style="width: 59%; height: 5px;"></div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
 
 </div> <!-- .content -->
 

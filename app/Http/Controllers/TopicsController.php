@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Topic;
+
+use App\Track;
+
 class TopicsController extends Controller
 {
     /**
@@ -13,7 +17,14 @@ class TopicsController extends Controller
      */
     public function index()
     {
-        //
+        $date = date('l, m-F-Y');
+        $time = date('H:i A');
+
+        $tracks = Track::where('status', 1)->latest()->get();
+
+        $topics = Topic::orderBy('track_id')->latest()->paginate(5);
+
+        return view('topics.index',compact('date','time','tracks','topics'));
     }
 
     /**
@@ -34,7 +45,20 @@ class TopicsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title' => ['required','min:5','string','unique:topics'],
+            'track' => ['required'],
+            'duration' => ['required'],
+        ]);
+
+        Topic::create([
+            'title' => $data['title'],
+            'track_id' => $data['track'],
+            'duration' => $data['duration']
+        ]);
+
+        return redirect('/topics');
+
     }
 
     /**
@@ -79,6 +103,9 @@ class TopicsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Topic::find($id)->delete($id);
+        return response()->json([
+         'success' => 'Record deleted successfully!'
+        ]);
     }
 }
