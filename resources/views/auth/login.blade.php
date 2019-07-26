@@ -13,8 +13,8 @@
                                     @csrf
 
                                 <div class="wrap-input100 m-b-26">
-                                    <span class="label-input100" for="email">Username</span>
-                                    <input id="email" type="email" class="input100 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"  autocomplete="email"  placeholder="Enter Username" autofocus>
+                                    <span class="label-input100" for="email">E-mail</span>
+                                    <input id="email" type="email" class="input100 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"  autocomplete="email"  placeholder="Enter E-mail" autofocus>
                                 </div>
 
                                 <div class="">

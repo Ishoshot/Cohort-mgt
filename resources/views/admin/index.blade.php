@@ -90,76 +90,65 @@
     </div>
 </div>
 
-
-
 <div class="content mt-3">
-    {{-- <div class="col-sm-12">
-        <div class="alert  alert-success alert-dismissible fade show" role="alert">
-            <i class="fa fa-volume-up"></i>
-            {{ 'Flash Messages here' }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    </div> --}}
 
-<div class="col-md-12 text-center mb-2 mt-2">
+    <div class="col-md-12 text-center mb-2 mt-2">
 
-      <div class="card col-md-4 mt-5 p-3">
-        <div class="card-body bg-flat-color-0">
-          <div class="div-square">
-            <a href="/cohorts">
-            <i class="fa fa-users fa-5x"></i>
-            <h4 class="pt-4">COHORTS</h4>
-            </a>
-            <div class="progress progress-xs mt-3 mb-0 bg-flat-color-1" style="width: 40%; height: 5px;"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card col-md-4 mt-5 p-3">
-        <div class="card-body bg-flat-color-0">
-          <div class="div-square">
-            <a href="/topics">
-            <i class="fa fa-list fa-5x"></i>
-            <h4 class="pt-4">MANAGE TOPICS</h4>
-            </a>
-            <div class="progress progress-xs mt-3 mb-0 bg-flat-color-5" style="width: 60%; height: 5px;"></div>
-          </div>
-      </div>
-      </div>
-
-    <div class="card col-md-4 mt-5 p-3">
-    <div class="card-body bg-flat-color-0">
-        <div class="div-square">
-            <a href="/students">
-                <i class="fa fa-user fa-5x"></i>
-                <h4 class="pt-4">MANAGE STUDENTS</h4>
-            </a>
-            <div class="progress progress-xs mt-3 mb-0 bg-flat-color-4" style="width: 59%; height: 5px;"></div>
-        </div>
-    </div>
-    </div>
-
-</div>
-
-<div class="col-md-12 text-center mt-2 mb-2">
-
-    <div class="col-md-4"></div>
-
-    <div class="card col-md-4 mt-5 p-3">
+        <div class="card col-md-4 mt-5 p-3">
             <div class="card-body bg-flat-color-0">
-              <div class="div-square">
-                <a href="/pairs">
-                <i class="fa fa-graduation-cap fa-5x"></i>
-                <h4 class="pt-4">PAIR MAPPING</h4>
+            <div class="div-square">
+                <a href="/track">
+                <i class="fa fa-users fa-5x"></i>
+                <h4 class="pt-4">Manage Tracks</h4>
                 </a>
-                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-3" style="width: 80%; height: 5px;"></div>
-              </div>
-          </div>
+                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-1" style="width: 40%; height: 5px;"></div>
+            </div>
+            </div>
+        </div>
+
+        <div class="card col-md-4 mt-5 p-3">
+            <div class="card-body bg-flat-color-0">
+            <div class="div-square">
+                <a href="/topics">
+                <i class="fa fa-list fa-5x"></i>
+                <h4 class="pt-4">MANAGE TOPICS</h4>
+                </a>
+                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-5" style="width: 60%; height: 5px;"></div>
+            </div>
+        </div>
+        </div>
+
+        <div class="card col-md-4 mt-5 p-3">
+        <div class="card-body bg-flat-color-0">
+            <div class="div-square">
+                <a href="/students">
+                    <i class="fa fa-user fa-5x"></i>
+                    <h4 class="pt-4">MANAGE STUDENTS</h4>
+                </a>
+                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-4" style="width: 59%; height: 5px;"></div>
+            </div>
+        </div>
+        </div>
+
     </div>
 
-    <div class="col-md-4"></div>
+    <div class="col-md-12 text-center mt-2 mb-2">
+
+        <div class="col-md-4"></div>
+
+        <div class="card col-md-4 mt-5 p-3">
+                <div class="card-body bg-flat-color-0">
+                <div class="div-square">
+                    <a href="/pairs">
+                    <i class="fa fa-graduation-cap fa-5x"></i>
+                    <h4 class="pt-4">PAIR MAPPING</h4>
+                    </a>
+                    <div class="progress progress-xs mt-3 mb-0 bg-flat-color-3" style="width: 80%; height: 5px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4"></div>
 
 
 </div>
