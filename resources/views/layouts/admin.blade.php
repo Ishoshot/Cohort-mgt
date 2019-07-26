@@ -31,8 +31,7 @@
 
 </head>
 <body>
-    <div id="app">
-            <aside id="left-panel" class="left-panel">
+    <aside id="left-panel" class="left-panel">
         <nav class="navbar navbar-expand-sm navbar-default">
 
             <div class="navbar-header">
@@ -42,7 +41,7 @@
                 </button>
 
                  <a class="mt-3 name navbar-brand"  href="{{ url('/home') }}">
-                   {{ '() fofxAcademy' }}
+                   {{ '( ) fofxAcademy' }}
                 </a>
 
                  <p class="navbar-brand hidden">fofx</p>
@@ -70,7 +69,7 @@
                     </li>
 
                     <li>
-                            <a href="/pairs"> <i class="menu-icon fa fa-graduation-cap"></i>Pair Mapping </a>
+                        <a href="/pairs"> <i class="menu-icon fa fa-graduation-cap"></i>Pair Mapping </a>
                     </li>
 
                     <h3 class="menu-title">Extras</h3><!-- /.menu-title -->
@@ -90,14 +89,16 @@
                             </li>
                         </ul>
                     </li>
+
                 </ul>
+
             </div><!-- /.navbar-collapse -->
+
         </nav>
+
     </aside><!-- /#left-panel -->
 
-        {{--  <main class="py-4">  --}}
-            @yield('content')
-        {{--  </main>  --}}
-    </div>
+    @yield('content')
+
 </body>
 </html>
