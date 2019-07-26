@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
 // Track Routes
 Route::get('/track', 'TrackController@index');
 Route::Post('/track/create', 'TrackController@store');
@@ -27,3 +28,12 @@ Route::delete('/track/{id}', 'TrackController@destroy')->name('track.destroy');
 
 //
 
+// Topics Route
+
+Route::get('/topics', 'TopicsController@index')->name('topics');
+
+Route::post('/topics/create', 'TopicsController@store')->name('topics.store');
+
+Route::delete('/topics/{id}', 'TopicsController@destroy')->name('topics.destroy');
+
+// Topics Route
