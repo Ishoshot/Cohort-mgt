@@ -194,7 +194,7 @@
                     <td>{{$tracks->title}}</td>
 
                     <td>
-                        {{ $tracks->updated_at->format('l, M-F-Y @ H:i A') }}
+                        {{ $tracks->created_at->format('l, M-F-Y @ H:i A') }}
                     </td>
 
                     <td class="text-center">
