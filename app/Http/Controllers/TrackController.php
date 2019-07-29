@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Track;
-
+ use App\Topic;
 class TrackController extends Controller
 {
     /**
@@ -103,7 +103,8 @@ class TrackController extends Controller
     public function destroy($id)
     {
          //Find Track ID and delete
-         Track::find($id)->delete($id);
+        Track::find($id)->delete($id);
+        Topic::where('track_id', '=', $id)->delete();
 
          return response()->json([
              'success' => 'Record deleted successfully!'
