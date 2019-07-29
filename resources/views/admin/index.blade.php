@@ -46,21 +46,15 @@
 
         <div class="col-sm-5">
             <div class="user-area dropdown float-right">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-user"></i>
+                <a class="dropdown-item nav-link" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                    <i class="fa fa-power-off"></i> {{ __('Logout') }}
                 </a>
 
-                <div class="user-menu dropdown-menu">
-                    <a class="dropdown-item nav-link" href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
-                        <i class="fa fa-power-off"></i> {{ __('Logout') }}
-                    </a>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </div>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </div>
         </div>
     </div>
@@ -134,8 +128,6 @@
 
     <div class="col-md-12 text-center mt-2 mb-2">
 
-        <div class="col-md-4"></div>
-
         <div class="card col-md-4 mt-5 p-3">
                 <div class="card-body bg-flat-color-0">
                 <div class="div-square">
@@ -150,6 +142,7 @@
 
         <div class="col-md-4"></div>
 
+        <div class="col-md-4"></div>
 
 </div>
 
