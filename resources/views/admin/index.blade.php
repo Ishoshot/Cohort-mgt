@@ -46,11 +46,8 @@
 
         <div class="col-sm-5">
             <div class="user-area dropdown float-right">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-user"></i>
-                </a>
 
-                <div class="user-menu dropdown-menu">
+                <div class="user-area dropdown">
                     <a class="dropdown-item nav-link" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
