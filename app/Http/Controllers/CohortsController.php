@@ -22,7 +22,7 @@ class CohortsController extends Controller
 
         $tracks = Track::where('status', 1)->latest()->get();
 
-        $cohorts = Cohort::orderBy('track_id')->latest()->paginate(5);
+        $cohorts = Cohort::orderBy('track_id')->orderBy('name')->latest()->paginate(5);
 
         return view('cohorts.index',compact('date','time','tracks','cohorts'));
     }
@@ -59,7 +59,7 @@ class CohortsController extends Controller
         // $date =
 
         $data = $request->validate([
-            'name' => ['required','min:5','string','unique:cohorts'],
+            'name' => ['required','min:5','string'],
             'track' => ['required'],
             'start_date' => ['required','date'],
             'end_date' => ['required','date','after:start_date'],
@@ -67,16 +67,30 @@ class CohortsController extends Controller
             'status' => ['required'],
         ]);
 
-        Cohort::create([
-            'name' => $data['name'],
-            'track_id' => $data['track'],
-            'start_date' => $data['start_date'],
-            'end_date' => $data['end_date'],
-            'duration' => $data['duration'],
-            'status' => $data['status']
-        ]);
+        $exists = Cohort::where([
+            ['name', '=', $data['name']],
+            ['track_id', '=', $data['track']]
+            ])->get();
 
-        return redirect('/cohorts');
+        // dd($exists);
+
+        if(count($exists) >= 1 ){
+            return redirect()->back()->with('message', 'Duplicate Entry: This cohort already offers the selected track.');
+        }
+        else
+        {
+
+            Cohort::create([
+                'name' => $data['name'],
+                'track_id' => $data['track'],
+                'start_date' => $data['start_date'],
+                'end_date' => $data['end_date'],
+                'duration' => $data['duration'],
+                'status' => $data['status']
+            ]);
+
+            return redirect('/cohorts');
+        }
     }
 
     /**
