@@ -59,7 +59,7 @@
                     <h3 class="menu-title">ACTIVITIES</h3><!-- /.menu-title -->
 
                     <li>
-                        <a href="/track"> <i class="menu-icon fa fa-users"></i>Manage Tracks</a>
+                        <a href="/track"> <i class="menu-icon fa fa-book"></i>Manage Tracks</a>
                     </li>
 
                     <li>

@@ -92,7 +92,7 @@
             <div class="card-body bg-flat-color-0">
             <div class="div-square">
                 <a href="/track">
-                <i class="fa fa-users fa-5x"></i>
+                <i class="fa fa-book fa-5x"></i>
                 <h4 class="pt-4">Manage Tracks</h4>
                 </a>
                 <div class="progress progress-xs mt-3 mb-0 bg-flat-color-1" style="width: 40%; height: 5px;"></div>

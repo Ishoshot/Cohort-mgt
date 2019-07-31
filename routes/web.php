@@ -24,12 +24,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/track', 'TrackController@index');
 Route::Post('/track/create', 'TrackController@store');
 Route::get('/changeStatus', 'TrackController@changeStatus');
+Route::get('/showTopics', 'TrackController@showTopics');
 Route::delete('/track/{id}', 'TrackController@destroy')->name('track.destroy');
 
-//
 
 // Topics Route
-
 Route::get('/topics', 'TopicsController@index')->name('topics');
 
 Route::post('/topics/create', 'TopicsController@store')->name('topics.store');
