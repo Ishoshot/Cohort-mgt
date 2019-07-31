@@ -209,7 +209,7 @@
                     </td>
 
                     <td class="text-center">
-                        <button class="deleteRecord  btn btn-outline-danger" id="del" data-id="{{ $tracks->id }}"><i class="fa fa-trash-o"></i></button>
+                        <button class="deleteRecord  btn btn-outline-danger" id="del" data-id="{{ $tracks->id }}"><i class="fa fa-trash-o"></i></input>
                     </td>
                 </tr>
                 @endforeach
@@ -264,17 +264,17 @@
     <script>
 
         //STATUS TOGGLER
-        $( ".toggle-class" ).change(function()
+        $(".toggle-class").change(function()
         {
             var status = $(this).prop('checked') == true ? 1 : 0;
-            var cohort_id = $(this).data('id');
+            var id = $(this).data('id');
 
             $.ajax({
                 type: "GET",
                 dataType: "json",
                 url: 'changeStatus',
                 headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}' },
-                data: {'status': status, 'id': cohort_id},
+                data: {'status': status, 'id':  id},
                 success: function(data){
                     console.log(data);
                 }
@@ -330,7 +330,6 @@
                         $("#topic-data").append( $("<td />").text(data.topics[i].created_at) );
                         $("#topic-data").append( $("<td/>").text(data.topics[i].duration + " days") );
                         $("#topic-data").append( $("</tr>"));
-
                       }
                     }
                 }

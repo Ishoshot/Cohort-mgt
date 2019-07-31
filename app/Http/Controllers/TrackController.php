@@ -42,7 +42,7 @@ class TrackController extends Controller
 
 
     public function showTopics(Request $request)
-    { 
+    {
         $topics = Topic::where('track_id', $request->id)->latest()->get();
         return response()->json(['topics' => $topics]);
     }
