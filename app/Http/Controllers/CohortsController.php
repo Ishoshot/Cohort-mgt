@@ -59,7 +59,7 @@ class CohortsController extends Controller
         // $date =
 
         $data = $request->validate([
-            'name' => ['required','min:5','string'],
+            'name' => ['required','min:5','string','unique:cohorts'],
             'track' => ['required'],
             'start_date' => ['required','date'],
             'end_date' => ['required','date','after:start_date'],
@@ -67,30 +67,16 @@ class CohortsController extends Controller
             'status' => ['required'],
         ]);
 
-        $exists = Cohort::where([
-            ['name', '=', $data['name']],
-            ['track_id', '=', $data['track']]
-            ])->get();
+        Cohort::create([
+            'name' => $data['name'],
+            'track_id' => $data['track'],
+            'start_date' => $data['start_date'],
+            'end_date' => $data['end_date'],
+            'duration' => $data['duration'],
+            'status' => $data['status']
+        ]);
 
-        // dd($exists);
-
-        if(count($exists) >= 1 ){
-            return redirect()->back()->with('message', 'Duplicate Entry: This cohort already offers the selected track.');
-        }
-        else
-        {
-
-            Cohort::create([
-                'name' => $data['name'],
-                'track_id' => $data['track'],
-                'start_date' => $data['start_date'],
-                'end_date' => $data['end_date'],
-                'duration' => $data['duration'],
-                'status' => $data['status']
-            ]);
-
-            return redirect('/cohorts');
-        }
+        return redirect('/cohorts');
     }
 
     /**
