@@ -11,4 +11,8 @@ class Track extends Model
     public function topics(){
         return $this->hasMany(Topic::class);
     }
+
+    public function cohorts(){
+        return $this->hasMany(Topic::class);
+    }
 }

@@ -60,7 +60,7 @@
     <div class="col-sm-4">
         <div class="page-header float-left">
             <div class="page-title">
-                <h1 class="font-weight-bold">MANAGE TOPICS</h1>
+                <h1 class="font-weight-bold">Manage Topics</h1>
             </div>
         </div>
     </div>
@@ -125,7 +125,7 @@
                         <input id="title"
                         name="title"
                         type="text"
-                        placeholder="e.g Introduction to Laravel" 
+                        placeholder="e.g Introduction to Laravel"
                         class="form-control @error('title') is-invalid @enderror"
                         autofocus rows="5" />
 
@@ -176,7 +176,7 @@
                         </div>
 
                         <div class="mr-3">
-                            <button class="btn btn-danger" type="reset">Reset</button>                    
+                            <button class="btn btn-danger" type="reset">Reset</button>
                         </div>
                     </div>
 
@@ -229,7 +229,7 @@
                         <td class="text-center">{{$topic->duration." days"}}</td>
 
                         <td class="text-center">
-                            <button class="deleteRecord btn btn-outline-danger" 
+                            <button class="deleteRecord btn btn-outline-danger"
                                 id="del" data-id="{{ $topic->id }}"><i class="fa fa-trash-o"></i>
                             </button>
                         </td>
@@ -238,7 +238,7 @@
                 </tbody>
             </table>
             @endif
-            <hr/>    
+            <hr/>
         </div>
 
         <div class="col-12 d-flex justify-content-center">
@@ -249,7 +249,7 @@
 
 
 <script type="text/javascript" charset="utf-8">
-    
+
   {{-- DELETE REQUEST --}}
         $(".deleteRecord").click(function(){
             var id = $(this).data("id");
@@ -262,7 +262,7 @@
                     "id": id,
                     "_token": token,
                 },
-                
+
                 success: function (data)
                 {
                     if (data.success)

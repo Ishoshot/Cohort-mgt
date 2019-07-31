@@ -93,7 +93,7 @@
             <div class="div-square">
                 <a href="/track">
                 <i class="fa fa-book fa-5x"></i>
-                <h4 class="pt-4">Manage Tracks</h4>
+                <h4 class="pt-4">MANAGE TRACKS</h4>
                 </a>
                 <div class="progress progress-xs mt-3 mb-0 bg-flat-color-1" style="width: 40%; height: 5px;"></div>
             </div>
@@ -115,9 +115,9 @@
         <div class="card col-md-4 mt-5 p-3">
         <div class="card-body bg-flat-color-0">
             <div class="div-square">
-                <a href="/students">
-                    <i class="fa fa-user fa-5x"></i>
-                    <h4 class="pt-4">MANAGE STUDENTS</h4>
+                <a href="/cohorts">
+                    <i class="fa fa-group fa-5x"></i>
+                    <h4 class="pt-4">MANAGE COHORTS</h4>
                 </a>
                 <div class="progress progress-xs mt-3 mb-0 bg-flat-color-4" style="width: 59%; height: 5px;"></div>
             </div>

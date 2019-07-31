@@ -5,12 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Topic;
-
+use App\Cohort;
 use App\Track;
 
-use App\Cohort;
-
-class TopicsController extends Controller
+class CohortsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,9 +22,9 @@ class TopicsController extends Controller
 
         $tracks = Track::where('status', 1)->latest()->get();
 
-        $topics = Topic::orderBy('track_id')->latest()->paginate(5);
+        $cohorts = Cohort::orderBy('track_id')->latest()->paginate(5);
 
-        return view('topics.index',compact('date','time','tracks','topics'));
+        return view('cohorts.index',compact('date','time','tracks','cohorts'));
     }
 
     /**
@@ -45,22 +43,40 @@ class TopicsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function changeStatus(Request $request)
+    {
+        $change = Cohort::find($request->id);
+        $change->status = $request->status;
+        $change->save();
+
+        return response()->json(['success'=>'Status change successfully.']);
+    }
+
+
     public function store(Request $request)
     {
+        // $date =
+
         $data = $request->validate([
-            'title' => ['required','min:5','string','unique:topics'],
+            'name' => ['required','min:5','string','unique:cohorts'],
             'track' => ['required'],
+            'start_date' => ['required','date'],
+            'end_date' => ['required','date','after:start_date'],
             'duration' => ['required'],
+            'status' => ['required'],
         ]);
 
-        Topic::create([
-            'title' => $data['title'],
+        Cohort::create([
+            'name' => $data['name'],
             'track_id' => $data['track'],
-            'duration' => $data['duration']
+            'start_date' => $data['start_date'],
+            'end_date' => $data['end_date'],
+            'duration' => $data['duration'],
+            'status' => $data['status']
         ]);
 
-        return redirect('/topics');
-
+        return redirect('/cohorts');
     }
 
     /**
@@ -105,9 +121,10 @@ class TopicsController extends Controller
      */
     public function destroy($id)
     {
-        Topic::find($id)->delete($id);
-        return response()->json([
-         'success' => 'Record deleted successfully!'
-        ]);
+        Cohort::find($id)->delete($id);
+
+         return response()->json([
+             'success' => 'Record deleted successfully!'
+         ]);
     }
 }

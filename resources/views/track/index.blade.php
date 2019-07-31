@@ -200,7 +200,7 @@
 
                     <td class="text-center">
                         <form>
-                            <input data-id="{{$tracks->id}}"
+                            <input data-id="{{ $tracks->id }}"
                             class="toggle-class btn" type="checkbox"
                             data-onstyle="success" data-offstyle="danger"
                             data-toggle="toggle" data-on="Active"
@@ -221,7 +221,7 @@
             </div>
 
             <div class="col-12 d-flex justify-content-center">
-            {{$track->links() }}
+                {{$track->links() }}
             </div>
         </div>
 
