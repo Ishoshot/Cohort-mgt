@@ -126,22 +126,19 @@
                             @enderror
 
                         </div>
-
                         <div class="form-group">
-                            <label for="track" class="col-form-label font-weight-bold">{{ __('Track Status') }}</label>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                <input type="radio"  id="active_track" class="form-radio" name="track_status"
-                                Value="1" checked> <label for="active_track">Active</label>
-                                </label>
-                            </div>
+                                <label for="track" class="col-form-label font-weight-bold">{{ __('Status') }}</label><br/>
 
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                <input type="radio"   id="inactive_track" class="form-radio" name="track_status"
-                                    Value="0"><label for="inactive_track">InActive</label>
-                                </label>
-                            </div>
+                                <div class="d-inline">
+                                    <input type="radio" id="active_track" class="form-radio" name="track_status"
+                                    Value="1" checked> <label for="active_track">Active</label>
+                                </div>
+
+                                <div class="ml-5 d-inline">
+                                    <input type="radio" id="inactive_track" class="form-radio" name="track_status"
+                                    Value="0"> <label for="inactive_track">InActive</label>
+                                </div>
+
                         </div>
 
                         <div class="modal-footer d-flex row pt-4 justify-content-between">
@@ -191,7 +188,11 @@
                 @foreach ($track as $tracks)
                 <tr>
 
-                    <td>{{$tracks->title}}</td>
+                    <td>
+                        <a class="show-topics" data-toggle="collapse" href="#collapseTopics" aria-expanded="false" aria-controls="collapseTopics" data-id="{{$tracks->id}}">
+                        {{$tracks->title}}
+                        </a>
+                    </td>
 
                     <td>
                         {{ $tracks->created_at->format('l, M-F-Y @ H:i A') }}
@@ -222,18 +223,49 @@
             <div class="col-12 d-flex justify-content-center">
             {{$track->links() }}
             </div>
+        </div>
 
+        {{--  This div holds the table that displays list of topics for a selected track  --}}
+        <div class="collapse" id="collapseTopics">
+            <div class="card">
+                    <div class="card-header bg-primary">
+                        <h3 class="text-white"><i class ="fa fa-list"></i> Topics</h3>
+                    </div>
+
+                <div class="card-body">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Title</th>
+                                <th scope="col">Created On</th>
+                                <th scope="col">Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody id="topic-data">
+                            <tr>
+                                <td>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        </div>
+
+
 
     </div>
+
+
 
 
     {{-- INLINE JS --}}
     <script>
 
-        {{-- STATUS TOGGLER --}}
-        $( ".toggle-class" ).change(function() {
+        //STATUS TOGGLER
+        $( ".toggle-class" ).change(function()
+        {
             var status = $(this).prop('checked') == true ? 1 : 0;
             var cohort_id = $(this).data('id');
 
@@ -244,13 +276,14 @@
                 headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}' },
                 data: {'status': status, 'id': cohort_id},
                 success: function(data){
+                    console.log(data);
                 }
             });
         });
 
-
-        {{-- DELETE REQUEST --}}
-        $(".deleteRecord").click(function(){
+        //AJAX DELETE REQUEST
+        $(".deleteRecord").click(function()
+        {
             var id = $(this).data("id");
             var token = $("meta[name='csrf-token']").attr("content");
 
@@ -267,16 +300,44 @@
                 {
                     if (data.success)
                     {
-                        setInterval(function(){
-                            $('div#content').load(location.href + ' #content');
-                        }, 1000);
+                        setTimeout(function(){ location.reload(); }, 3000);
+
                     }
                 }
             });
-
         });
-    </script>
 
+        //Ajax Request To Show List of Topics for a Selected Tracks
+        $( ".show-topics" ).click(function() {
+            $("#topic-data").empty().slideDown( "slow" );
+            var track_id= $(this).data('id');
+
+
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: 'showTopics',
+                headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                data: {'id': track_id},
+                success: function(data)
+                {
+                    if(data.topics)
+                    {
+                      for(var i=0; i < data.topics.length; i++)
+                      {
+                        $("#topic-data").append( $("<tr>"));
+                        $("#topic-data").append( $("<td/>").text(data.topics[i].title) );
+                        $("#topic-data").append( $("<td />").text(data.topics[i].created_at) );
+                        $("#topic-data").append( $("<td/>").text(data.topics[i].duration + " days") );
+                        $("#topic-data").append( $("</tr>"));
+
+                      }
+                    }
+                }
+            });
+        });
+
+</script>
 
 </div> <!-- .content -->
 </div><!-- /#right-panel -->

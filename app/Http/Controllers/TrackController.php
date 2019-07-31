@@ -22,7 +22,7 @@ class TrackController extends Controller
         $track = Track::latest()->paginate(10);
 
         //Get total count of tracks
-        return view('track.index', compact('date', 'time', 'track', 'countTrack'));
+        return view('track.index', compact('date', 'time', 'track'));
     }
 
     /**
@@ -38,6 +38,14 @@ class TrackController extends Controller
 
         return response()->json(['success'=>'Status change successfully.']);
     }
+
+
+    public function showTopics(Request $request)
+    { 
+        $topics = Topic::where('track_id', $request->id)->latest()->get();
+        return response()->json(['topics' => $topics]);
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -66,10 +74,12 @@ class TrackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function show($id)
-    // {
-
-    // }
+    public function show($id)
+    {
+        // $topics = Topic::where('track_id', $id)->latest()->get();
+        // return response()->json(['success'=>'Showed successfully.']);
+        // return view('track.index', compact('topics'));
+    }
 
     /**
      * Show the form for editing the specified resource.
