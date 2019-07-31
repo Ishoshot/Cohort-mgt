@@ -29,11 +29,16 @@ Route::delete('/track/{id}', 'TrackController@destroy')->name('track.destroy');
 //
 
 // Topics Route
-
 Route::get('/topics', 'TopicsController@index')->name('topics');
-
 Route::post('/topics/create', 'TopicsController@store')->name('topics.store');
-
 Route::delete('/topics/{id}', 'TopicsController@destroy')->name('topics.destroy');
 
 // Topics Route
+
+// Cohort Route
+Route::get('/cohorts', 'CohortsController@index')->name('cohorts');
+Route::post('/cohorts/create', 'CohortsController@store')->name('cohorts.store');
+Route::get('/changeStatus', 'CohortsController@changeStatus');
+Route::delete('/cohorts/{id}', 'CohortsController@destroy')->name('cohorts.destroy');
+
+

@@ -8,6 +8,8 @@ use App\Topic;
 
 use App\Track;
 
+use App\Cohort;
+
 class TopicsController extends Controller
 {
     /**
