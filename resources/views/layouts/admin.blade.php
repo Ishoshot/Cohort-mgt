@@ -14,22 +14,26 @@
 
     <link rel="icon" type="image/png" href="{{ asset('assets/images/icons/favicon.ico')}}"/>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
     <!-- Scripts -->
     <script src="{{ asset('vendors/jquery/dist/jquery.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
-    <script src="{{ asset('assets/js/bootstrap-datepicker.min.js') }}"></script>
+    {{--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>  --}}
+    {{--  <script src="{{ asset('assets/js/bootstrap-datepicker.min.js') }}"></script>  --}}
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    {{--  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>  --}}
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-datepicker3.min.css') }}">
+    {{--  <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-datepicker3.min.css') }}">  --}}
 
-    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    {{--  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">  --}}
 
 </head>
 <body>
@@ -102,6 +106,6 @@
 
     @yield('content')
 
-    @yield('script')
+    {{--  @yield('script')  --}}
 </body>
 </html>

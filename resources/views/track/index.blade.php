@@ -181,7 +181,7 @@
                         <th scope="col">Title</th>
                         <th scope="col">Created On</th>
                         <th scope="col" style="text-align:center;">Status</th>
-                        <th scope="col" style="text-align:center;">Remove</th>
+                        <th colspan="2" scope="col" style="text-align:center;">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -189,9 +189,7 @@
                 <tr>
 
                     <td>
-                        <a class="show-topics" data-toggle="collapse" href="#collapseTopics" aria-expanded="false" aria-controls="collapseTopics" data-id="{{$tracks->id}}">
                         {{$tracks->title}}
-                        </a>
                     </td>
 
                     <td>
@@ -201,13 +199,21 @@
                     <td class="text-center">
                         <form>
                             <input data-id="{{ $tracks->id }}"
-                            class="toggle-class btn" type="checkbox"
+                            class="toggle-class" type="checkbox"
                             data-onstyle="success" data-offstyle="danger"
                             data-toggle="toggle" data-on="Active"
                             data-off="InActive" {{ $tracks->status ? 'checked' : '' }}>
                         </form>
                     </td>
+                    <td>
+                        <button class="show-topics btn btn-outline-primary"
+                        data-toggle="collapse" href="#collapseTopics"
+                        aria-expanded="false" aria-controls="collapseTopics"
+                        data-id="{{$tracks->id}}">
+                        <i class="fa fa-eye"></i>
+                        </button>
 
+                    </td>
                     <td class="text-center">
                         <button class="deleteRecord  btn btn-outline-danger" id="del" data-id="{{ $tracks->id }}"><i class="fa fa-trash-o"></i></input>
                     </td>
@@ -228,16 +234,12 @@
         {{--  This div holds the table that displays list of topics for a selected track  --}}
         <div class="collapse" id="collapseTopics">
             <div class="card">
-                    <div class="card-header bg-primary">
-                        <h3 class="text-white"><i class ="fa fa-list"></i> Topics</h3>
-                    </div>
 
                 <div class="card-body">
                     <table class="table">
-                        <thead class="thead-dark">
+                        <thead class="thead-light">
                             <tr>
                                 <th scope="col">Title</th>
-                                <th scope="col">Created On</th>
                                 <th scope="col">Duration</th>
                             </tr>
                         </thead>
@@ -263,23 +265,22 @@
     {{-- INLINE JS --}}
     <script>
 
-        //STATUS TOGGLER
-        $(".toggle-class").change(function()
-        {
-            var status = $(this).prop('checked') == true ? 1 : 0;
-            var id = $(this).data('id');
+            {{-- STATUS TOGGLER --}}
+            $('.toggle-class').change(function() {
+                    var status = $(this).prop('checked') == true ? 1 : 0;
+                    var track_id = $(this).data('id');
 
-            $.ajax({
-                type: "GET",
-                dataType: "json",
-                url: 'changeStatus',
-                headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}' },
-                data: {'status': status, 'id':  id},
-                success: function(data){
-                    console.log(data);
-                }
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        url: 'trackStatus',
+                        headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                        data: {'status': status, 'track_id': track_id},
+                        success: function(data){
+                          console.log(data)
+                        }
+                    });
             });
-        });
 
         //AJAX DELETE REQUEST
         $(".deleteRecord").click(function()
@@ -312,7 +313,6 @@
             $("#topic-data").empty().slideDown( "slow" );
             var track_id= $(this).data('id');
 
-
             $.ajax({
                 type: "GET",
                 dataType: "json",
@@ -327,7 +327,6 @@
                       {
                         $("#topic-data").append( $("<tr>"));
                         $("#topic-data").append( $("<td/>").text(data.topics[i].title) );
-                        $("#topic-data").append( $("<td />").text(data.topics[i].created_at) );
                         $("#topic-data").append( $("<td/>").text(data.topics[i].duration + " days") );
                         $("#topic-data").append( $("</tr>"));
                       }
