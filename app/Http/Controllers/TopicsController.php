@@ -24,7 +24,7 @@ class TopicsController extends Controller
 
         $tracks = Track::where('status', 1)->latest()->get();
 
-        $topics = Topic::orderBy('track_id')->latest()->paginate(5);
+        $topics = Topic::orderBy('track_id')->orderBy('index')->paginate(5);
 
         return view('topics.index',compact('date','time','tracks','topics'));
     }
@@ -51,16 +51,30 @@ class TopicsController extends Controller
             'title' => ['required','min:5','string','unique:topics'],
             'track' => ['required'],
             'duration' => ['required'],
+            'index' => ['required'],
         ]);
 
-        Topic::create([
-            'title' => $data['title'],
-            'track_id' => $data['track'],
-            'duration' => $data['duration']
-        ]);
+        $exists = Topic::where([
+            ['index', '=', $data['index']],
+            ['track_id', '=', $data['track']]
+            ])->get();
 
-        return redirect('/topics');
+        // dd($exists);
 
+        if(count($exists) >= 1 ){
+            return redirect()->back()->with('message', 'Duplicate Entry: The selected index number has been assigned to an existing topic in the selected track.');
+        }
+        else{
+
+            Topic::create([
+                'title' => $data['title'],
+                'track_id' => $data['track'],
+                'duration' => $data['duration'],
+                'index' => $data['index']
+            ]);
+
+            return redirect('/topics');
+        }
     }
 
     /**

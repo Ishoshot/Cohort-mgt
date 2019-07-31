@@ -96,6 +96,16 @@
         </div>
         @endforeach
      @endif
+     @if (session('message'))
+        <div class="col-md-12">
+            <div class="alert  alert-danger alert-dismissible fade show" role="alert">
+            <i class="fa fa-volume-up"></i>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>{{ session('message') }}
+            </div>
+        </div>
+     @endif
 </div>
 
 
@@ -121,6 +131,23 @@
                     @csrf
 
                     <div class="form-group">
+                        <label for="index" class="col-form-label font-weight-bold">{{ __('Topic Index') }}</label>
+                        <select name="index"
+                        class="form-control @error('index') is-invalid @enderror">
+                            <option value="">~ Please Select Index Number ~</option>
+                            @for ($a = 1; $a <= 20 ; $a++)
+                                <option value="{{ $a }}">{{ $a }}</option>
+                            @endfor
+                        </select>
+
+                        @error('index')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
                         <label for="title" class="col-form-label font-weight-bold">{{ __('Topic Title') }}</label>
                         <input id="title"
                         name="title"
@@ -139,7 +166,7 @@
                     <div class="form-group">
                         <label for="track" class="col-form-label font-weight-bold">{{ __('Track') }}</label>
                         <select name="track"
-                        class="form-control @error('title') is-invalid @enderror">
+                        class="form-control @error('track') is-invalid @enderror">
                             <option value="">~ Please Select Track ~</option>
                             @foreach ($tracks as $track)
                                 <option value="{{ $track->id }}">{{ $track->title }}</option>

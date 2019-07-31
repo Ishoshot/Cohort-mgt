@@ -88,6 +88,16 @@
         </div>
         @endforeach
      @endif
+     @if (session('message'))
+        <div class="col-md-12">
+            <div class="alert  alert-danger alert-dismissible fade show" role="alert">
+            <i class="fa fa-volume-up"></i>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>{{ session('message') }}
+            </div>
+        </div>
+     @endif
 </div>
 
 
