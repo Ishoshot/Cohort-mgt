@@ -31,18 +31,18 @@ class TrackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function changeStatus(Request $request)
+    public function trackStatus(Request $request)
     {
-        $change = Track::find($request->id);
+        $change = Track::find($request->track_id);
         $change->status = $request->status;
         $change->save();
-
         return response()->json(['success'=>'Status change successfully.']);
+
     }
 
 
     public function showTopics(Request $request)
-    { 
+    {
         $topics = Topic::where('track_id', $request->id)->latest()->get();
         return response()->json(['topics' => $topics]);
     }

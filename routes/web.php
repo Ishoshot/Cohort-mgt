@@ -23,7 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Track Routes
 Route::get('/track', 'TrackController@index');
 Route::Post('/track/create', 'TrackController@store');
-Route::get('/changeStatus', 'TrackController@changeStatus');
+Route::get('/trackStatus', 'TrackController@trackStatus');
 Route::get('/showTopics', 'TrackController@showTopics');
 Route::delete('/track/{id}', 'TrackController@destroy')->name('track.destroy');
 
@@ -38,7 +38,7 @@ Route::delete('/topics/{id}', 'TopicsController@destroy')->name('topics.destroy'
 // Cohort Route
 Route::get('/cohorts', 'CohortsController@index')->name('cohorts');
 Route::post('/cohorts/create', 'CohortsController@store')->name('cohorts.store');
-Route::get('/changeStatus', 'CohortsController@changeStatus');
+Route::get('/cohortStatus', 'CohortsController@cohortStatus');
 Route::delete('/cohorts/{id}', 'CohortsController@destroy')->name('cohorts.destroy');
 
 

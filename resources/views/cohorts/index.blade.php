@@ -293,7 +293,7 @@
                     <td class="text-center">
                         <form>
                             <input data-id="{{ $cohort->id }}"
-                            class="toggle-class btn" type="checkbox"
+                            class="toggle-class" type="checkbox"
                             data-onstyle="success" data-offstyle="danger"
                             data-toggle="toggle" data-on="Active"
                             data-off="InActive" {{ $cohort->status ? 'checked' : '' }}>
@@ -339,24 +339,22 @@
 
 {{-- <!-- Right Panel --> --}}
 
-@endsection
-
-@section('script')
     <script>
         {{-- STATUS TOGGLER --}}
-        $( ".toggle-class" ).change(function() {
-            var status = $(this).prop('checked') == true ? 1 : 0;
-            var cohort_id = $(this).data('id');
+        $('.toggle-class').change(function() {
+                var status = $(this).prop('checked') == true ? 1 : 0;
+                var cohort_id = $(this).data('id');
 
-            $.ajax({
-                type: "GET",
-                dataType: "json",
-                url: 'changeStatus',
-                headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}' },
-                data: {'status': status, 'id': cohort_id},
-                success: function(data){
-                }
-            });
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: "cohortStatus",
+                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                    data: {'status': status, 'cohort_id': cohort_id},
+                    success: function(data){
+                      console.log(data)
+                    }
+                });
         });
 
 
