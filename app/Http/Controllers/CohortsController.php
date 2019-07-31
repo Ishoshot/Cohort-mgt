@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Track;
+
 use App\Topic;
 use App\Cohort;
-class TrackController extends Controller
+use App\Track;
+
+class CohortsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,15 +17,14 @@ class TrackController extends Controller
      */
     public function index()
     {
-        // Displays the current date and time
         $date = date('l, m-F-Y');
         $time = date('H:i A');
 
-        //Fetch latest tracks from DB
-        $track = Track::latest()->paginate(10);
+        $tracks = Track::where('status', 1)->latest()->get();
 
-        //Get total count of tracks
-        return view('track.index', compact('date', 'time', 'track'));
+        $cohorts = Cohort::orderBy('track_id')->latest()->paginate(5);
+
+        return view('cohorts.index',compact('date','time','tracks','cohorts'));
     }
 
     /**
@@ -31,13 +32,9 @@ class TrackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function changeStatus(Request $request)
+    public function create()
     {
-        $change = Track::find($request->id);
-        $change->status = $request->status;
-        $change->save();
-
-        return response()->json(['success'=>'Status change successfully.']);
+        //
     }
 
     /**
@@ -46,19 +43,40 @@ class TrackController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function changeStatus(Request $request)
+    {
+        $change = Cohort::find($request->id);
+        $change->status = $request->status;
+        $change->save();
+
+        return response()->json(['success'=>'Status change successfully.']);
+    }
+
+
     public function store(Request $request)
     {
-        //
+        // $date =
+
         $data = $request->validate([
-            'title' => ['required', 'unique:tracks', 'string'],
-            'track_status' =>'required'
+            'name' => ['required','min:5','string','unique:cohorts'],
+            'track' => ['required'],
+            'start_date' => ['required','date'],
+            'end_date' => ['required','date','after:start_date'],
+            'duration' => ['required'],
+            'status' => ['required'],
         ]);
 
-        Track::create([
-            'title' => $data['title'],
-            'status' => $data['track_status']
+        Cohort::create([
+            'name' => $data['name'],
+            'track_id' => $data['track'],
+            'start_date' => $data['start_date'],
+            'end_date' => $data['end_date'],
+            'duration' => $data['duration'],
+            'status' => $data['status']
         ]);
-            return back();
+
+        return redirect('/cohorts');
     }
 
     /**
@@ -67,10 +85,10 @@ class TrackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function show($id)
-    // {
-
-    // }
+    public function show($id)
+    {
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -78,10 +96,10 @@ class TrackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function edit($id)
-    // {
-    //     //
-    // }
+    public function edit($id)
+    {
+        //
+    }
 
     /**
      * Update the specified resource in storage.
@@ -90,10 +108,10 @@ class TrackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function update(Request $request, $id)
-    // {
-    //     //
-    // }
+    public function update(Request $request, $id)
+    {
+        //
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -103,10 +121,7 @@ class TrackController extends Controller
      */
     public function destroy($id)
     {
-         //Find Track ID and delete
-        Track::find($id)->delete($id);
-        Topic::where('track_id', '=', $id)->delete();
-        Cohort::where('track_id', '=', $id)->delete();
+        Cohort::find($id)->delete($id);
 
          return response()->json([
              'success' => 'Record deleted successfully!'
