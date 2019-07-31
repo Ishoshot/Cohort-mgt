@@ -44,9 +44,9 @@ class CohortsController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function changeStatus(Request $request)
+    public function cohortStatus(Request $request)
     {
-        $change = Cohort::find($request->id);
+        $change = Cohort::find($request->cohort_id);
         $change->status = $request->status;
         $change->save();
 
