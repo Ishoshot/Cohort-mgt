@@ -156,6 +156,22 @@
                             @enderror
                         </div>
 
+                        <div class="form-group">
+                            <label for="location" class="col-form-label font-weight-bold">{{ __('Location') }}</label><br/>
+
+                            <input id="location"
+                            name="location" type="text"
+                            class="form-control form-control-user @error('location') is-invalid @enderror"
+                            autofocus placeholder="Enter location of cohort"/>
+
+                            @error('location')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+
+                        </div>
+
                         <div class="form-row">
 
                             <div class="form-group col-md-4">
@@ -302,9 +318,9 @@
 
 
                     <td class="text-center">
-                        <button class="btn btn-primary">
+                        <a class="btn btn-outline-primary" role="button" href="/cohorts/{{ $cohort->id }}">
                             <i class="fa fa-eye"></i> View
-                        </button>
+                        </a>
                     </td>
 
 

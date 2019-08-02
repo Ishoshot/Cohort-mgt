@@ -40,5 +40,6 @@ Route::get('/cohorts', 'CohortsController@index')->name('cohorts');
 Route::post('/cohorts/create', 'CohortsController@store')->name('cohorts.store');
 Route::get('/cohortStatus', 'CohortsController@cohortStatus');
 Route::delete('/cohorts/{id}', 'CohortsController@destroy')->name('cohorts.destroy');
+Route::get('/cohorts/{cohort}', 'CohortsController@show')->name('cohorts.show');
 
 

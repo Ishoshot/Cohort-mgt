@@ -20,7 +20,7 @@ class CohortsController extends Controller
         $date = date('l, m-F-Y');
         $time = date('H:i A');
 
-        $tracks = Track::where('status', 1)->latest()->get();
+        $tracks = Track::with('cohorts')->where('status', 1)->latest()->get();
 
         $cohorts = Cohort::orderBy('track_id')->orderBy('name')->latest()->paginate(5);
 
@@ -65,6 +65,7 @@ class CohortsController extends Controller
             'end_date' => ['required','date','after:start_date'],
             'duration' => ['required'],
             'status' => ['required'],
+            'location' => ['required'],
         ]);
 
         Cohort::create([
@@ -73,7 +74,8 @@ class CohortsController extends Controller
             'start_date' => $data['start_date'],
             'end_date' => $data['end_date'],
             'duration' => $data['duration'],
-            'status' => $data['status']
+            'status' => $data['status'],
+            'location' => $data['location']
         ]);
 
         return redirect('/cohorts');
@@ -85,9 +87,12 @@ class CohortsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Cohort $cohort)
     {
-        //
+        $date = date('l, m-F-Y');
+        $time = date('H:i A');
+
+        return view('cohorts.show', compact('cohort','date','time'));
     }
 
     /**

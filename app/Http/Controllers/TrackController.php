@@ -44,7 +44,7 @@ class TrackController extends Controller
     public function showTopics(Request $request)
     {
         // $topics = Topic::where('track_id', $request->id)->get();
-        $topics = Topic::where('track_id', $request->id)
+        $topics = Topic::with('track')->where('track_id', $request->id)
                         ->orderBy('track_id')->orderBy('index')
                         ->get();
         return response()->json(['topics' => $topics]);
