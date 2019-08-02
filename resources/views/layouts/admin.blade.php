@@ -75,7 +75,7 @@
                     </li>
 
                     <li>
-                        <a href="/pairs"> <i class="menu-icon fa fa-graduation-cap"></i>Pair Mapping </a>
+                        <a href="/students"> <i class="menu-icon fa fa-graduation-cap"></i>Manage Students</a>
                     </li>
 
                     <h3 class="menu-title">Extras</h3><!-- /.menu-title -->

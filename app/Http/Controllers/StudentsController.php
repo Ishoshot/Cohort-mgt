@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Cohort;
+use App\Student;
 use Illuminate\Http\Request;
 
 class StudentsController extends Controller
 {
-    /**
+    /**;
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -14,6 +15,13 @@ class StudentsController extends Controller
     public function index()
     {
         //
+        $date = date('l, m-F-Y');
+        $time = date('H:i A');
+
+        $cohorts = Cohort::where('status', 1)->latest()->get();
+
+        $students = Student::orderBy('lastname')->orderBy('cohort_id')->paginate(5);
+        return view('students.index', compact('date', 'time', 'cohorts','students'));
     }
 
     /**
@@ -34,7 +42,25 @@ class StudentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'firstname' => ['required','min:3','string'],
+            'lastname' => ['required', 'min:3', 'string'],
+            'username' => ['required', 'min:3', 'string'],
+            'cohort' => ['required'],
+            'e_contact' => ['required', 'min:3', 'string'],
+            'e_phone' => ['required', 'min:3', 'string']
+        ]);
+
+        Student::create([
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
+            'username' => $data['username'],
+            'cohort_id' => $data['cohort'],
+            'e_contact' => $data['e_contact'],
+            'e_phone' => $data['e_phone']
+        ]);
+
+        return redirect('/students');
     }
 
     /**
@@ -57,6 +83,7 @@ class StudentsController extends Controller
     public function edit($id)
     {
         //
+
     }
 
     /**
@@ -80,5 +107,9 @@ class StudentsController extends Controller
     public function destroy($id)
     {
         //
+        Student::find($id)->delete($id);
+        return response()->json([
+         'success' => 'Record deleted successfully!'
+        ]);
     }
 }

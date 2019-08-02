@@ -131,19 +131,15 @@
         <div class="card col-md-4 mt-5 p-3">
                 <div class="card-body bg-flat-color-0">
                 <div class="div-square">
-                    <a href="/pairs">
+                    <a href="/students">
                     <i class="fa fa-graduation-cap fa-5x"></i>
-                    <h4 class="pt-4">PAIR MAPPING</h4>
+                    <h4 class="pt-4">MANAGE STUDENTS</h4>
                     </a>
                     <div class="progress progress-xs mt-3 mb-0 bg-flat-color-3" style="width: 80%; height: 5px;"></div>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-4"></div>
-
-        <div class="col-md-4"></div>
-
+    
 </div>
 
 

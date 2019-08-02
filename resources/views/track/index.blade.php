@@ -212,7 +212,6 @@
                         data-id="{{$tracks->id}}">
                         <i class="fa fa-eye"></i>
                         </button>
-
                     </td>
                     <td class="text-center">
                         <button class="deleteRecord  btn btn-outline-danger" id="del" data-id="{{ $tracks->id }}"><i class="fa fa-trash-o"></i></input>

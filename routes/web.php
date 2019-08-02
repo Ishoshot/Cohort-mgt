@@ -33,7 +33,6 @@ Route::get('/topics', 'TopicsController@index')->name('topics');
 Route::post('/topics/create', 'TopicsController@store')->name('topics.store');
 Route::delete('/topics/{id}', 'TopicsController@destroy')->name('topics.destroy');
 
-// Topics Route
 
 // Cohort Route
 Route::get('/cohorts', 'CohortsController@index')->name('cohorts');
@@ -41,4 +40,8 @@ Route::post('/cohorts/create', 'CohortsController@store')->name('cohorts.store')
 Route::get('/cohortStatus', 'CohortsController@cohortStatus');
 Route::delete('/cohorts/{id}', 'CohortsController@destroy')->name('cohorts.destroy');
 
+// Students Route
+Route::get('/students', 'StudentsController@index');
+Route::post('/students/create', 'StudentsController@store')->name('students.store');
+Route::delete('/students/{id}', 'StudentsController@destroy')->name('students.destroy');
 
