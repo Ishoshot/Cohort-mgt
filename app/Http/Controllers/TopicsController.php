@@ -22,7 +22,7 @@ class TopicsController extends Controller
         $date = date('l, m-F-Y');
         $time = date('H:i A');
 
-        $tracks = Track::where('status', 1)->latest()->get();
+        $tracks = Track::with('topics')->where('status', 1)->latest()->get();
 
         $topics = Topic::orderBy('track_id')->orderBy('index')->paginate(5);
 
