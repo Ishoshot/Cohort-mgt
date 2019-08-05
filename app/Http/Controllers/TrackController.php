@@ -59,7 +59,7 @@ class TrackController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
         $data = $request->validate([
             'title' => ['required', 'unique:tracks', 'string'],
             'track_status' =>'required'
