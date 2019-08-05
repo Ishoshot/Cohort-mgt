@@ -89,6 +89,9 @@
                         <a class="nav-link" id="pills-topics-tab" data-toggle="pill" href="#topics" role="tab" aria-controls="pills-topics" aria-selected="false">Topics</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" id="pills-students-tab" data-toggle="pill" href="#students" role="tab" aria-controls="pills-students" aria-selected="false">Students</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" id="pills-schedule-tab" data-toggle="pill" href="#schedule" role="tab" aria-controls="pills-schedule" aria-selected="false">Schedule</a>
                     </li>
                 </ul>
@@ -106,30 +109,98 @@
                             <p>Active from: {{ $cohort->start_date .' to '. $cohort->end_date }}</p>
                             <p>Duration: {{ $cohort->duration }}</p>
                             <p>Location: {{ $cohort->location }}</p>
-                            <p>Created on: {{ $cohort->created_at->format('l, M-F-Y @ H:i A') }}</p>
+                            <p>Created on: {{ $cohort->created_at->format('l, M-Y @ H:i A') }}</p>
                         </div>
                     </div>
+
 
                     <div class="tab-pane fade" id="topics" role="tabpanel" aria-labelledby="pills-topics-tab">
                         <table class="table table-hover">
                             <thead class="bg-light">
-                                <tr align="center">
+                                <tr>
                                     <th scope="col">Title</th>
-                                    <th scope="col">Duration</th>
+                                    <th scope="col" class="text-center">Duration</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($cohort->track->topics as $topic)
                                     <tr>
                                         <td>{{ $topic->title }}</td>
-                                        <td>{{ $topic->duration }}</td>
+                                        <td class="text-center">{{ $topic->duration.' days' }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
 
-                    <div class="tab-pane fade" id="schedule" role="tabpanel" aria-labelledby="pills-schedule-tab">...</div>
+
+                    <div class="tab-pane fade" id="students" role="tabpanel" aria-labelledby="pills-students-tab">
+                        <table class="table table-hover">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th scope="col">Fullname</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col" class="text-center">Phone Number</th>
+                                    <th scope="col" class="text-center">Date Registered</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($cohort->students as $student)
+                                    <tr>
+                                        <td>{{ $student->firstname .' '. $student->firstname }}</td>
+                                        <td >{{ 'email' }}</td>
+                                        <td class="text-center">{{ 'phone' }}</td>
+                                        <td class="text-center">
+                                           {{ $student->created_at->format('l, M-Y @ H:i A') }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+                    <div class="tab-pane fade" id="schedule" role="tabpanel" aria-labelledby="pills-schedule-tab">
+                        <table class="table table-hover">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th scope="col">Cohort</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col" class="text-center">Duration</th>
+                                    <th scope="col" class="text-center">Start date</th>
+                                    <th scope="col" class="text-center">Finish date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <form action="">
+                                @foreach ($cohort->track->topics as $topic)
+                                    <tr>
+                                        <td>
+                                            {{ $cohort->name }}
+                                        </td>
+                                        <td>
+                                            {{ $topic->title }}
+                                            <input type="hidden" name="title" value="{{ $topic->title }}">
+                                        </td>
+                                        <td class="text-center">
+                                            {{ $topic->duration.' days' }}
+                                            <input type="hidden" name="duration" value="{{ $topic->duration }}">
+                                        </td>
+                                        <td class="text-center">
+                                            {{ 'date' }}
+                                            <input type="hidden" name="startdate">
+                                        </td>
+                                        <td class="text-center">
+                                            {{ 'date' }}
+                                            <input type="hidden" name="enddate">
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </form>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

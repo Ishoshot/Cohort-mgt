@@ -243,6 +243,7 @@
                         <th scope="col">Title</th>
                         <th scope="col">Track</th>
                         <th scope="col" style="text-align:center;">Duration</th>
+                        <th scope="col" style="text-align:center;">Created On</th>
                         <th scope="col" style="text-align:center;">Delete</th>
                     </tr>
                 </thead>
@@ -254,6 +255,10 @@
                         <td>{{$topic->track->title}}</td>
 
                         <td class="text-center">{{$topic->duration." days"}}</td>
+
+                        <td class="text-center">
+                            {{ $topic->created_at->format('l, M-Y @ H:i A') }}
+                        </td>
 
                         <td class="text-center">
                             <button class="deleteRecord btn btn-outline-danger"
