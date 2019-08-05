@@ -45,4 +45,4 @@ Route::get('/cohorts/{cohort}', 'CohortsController@show')->name('cohorts.show');
 Route::get('/students', 'StudentsController@index');
 Route::post('/students/create', 'StudentsController@store')->name('students.store');
 Route::delete('/students/{id}', 'StudentsController@destroy')->name('students.destroy');
-
+Route::get('/students/{student}', 'StudentsController@show')->name('students.show');

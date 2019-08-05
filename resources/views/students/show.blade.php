@@ -53,7 +53,7 @@
     <div class="col-sm-4">
         <div class="page-header float-left">
             <div class="page-title">
-                <h1 class="font-weight-bold">Manage Cohorts</h1>
+                <h1 class="font-weight-bold">Manage Students</h1>
             </div>
         </div>
     </div>
@@ -70,55 +70,23 @@
     </div>
 </div>
 
-
-
 <div class="content mt-3">
-
-
 
     {{--  TABLE TO DISPLAY ALL RECORDS IN COHORTS TABLES  --}}
     <div class="col-md-12 mb-2 mt-3">
         <div class="card">
 
             <div class="card-header bg-light">
-                <ul class="nav nav-pills" id="pills-tab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#home" role="tab" aria-controls="pills-home" aria-selected="true">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="pills-topics-tab" data-toggle="pill" href="#topics" role="tab" aria-controls="pills-topics" aria-selected="false">Topics</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="pills-schedule-tab" data-toggle="pill" href="#schedule" role="tab" aria-controls="pills-schedule" aria-selected="false">Schedule</a>
-                    </li>
-                </ul>
+                <h2 class="text-dark">Students</h2>
             </div>
 
             <div class="card-body" id="content">
-
-                <div class="tab-content" id="pills-tabContent">
-
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <div class="col-md-12 text-center">
-                            <h4 class="font-weight-bold">{{ $cohort->name }}</h4>
-                            <p>Track: {{ $cohort->track->title }}</p>
-                            <p>Track status: {{ $cohort->status }}</p>
-                            <p>Active from: {{ $cohort->start_date .' to '. $cohort->end_date }}</p>
-                            <p>Duration: {{ $cohort->duration }}</p>
-                            <p>Location: {{ $cohort->location }}</p>
-                            <p>Created on: {{ $cohort->created_at->format('l, M-F-Y @ H:i A') }}</p>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="topics" role="tabpanel" aria-labelledby="pills-topics-tab">
-                        @forelse ($cohort->track->topics as $topic)
-                            <h4>{{ $topic->name }}</h4>
-                        @empty
-
-                        @endforelse
-                    </div>
-
-                    <div class="tab-pane fade" id="schedule" role="tabpanel" aria-labelledby="pills-schedule-tab">...</div>
+                <div class="col-md-12 text-center">
+                    <h4 class="font-weight-bold">{{ $student->firstname }} {{ $student->lastname }}</h4>
+                    <p>Username: {{ $student->username }}</p>
+                    <p>Cohort: {{ $student->cohort->name }}</p>
+                    <p>Emergency Contact: {{ $student->e_contact }}</p>
+                    <p>Emegergency Phone: {{ $student->e_phone }}</p>
                 </div>
             </div>
         </div>
