@@ -193,7 +193,7 @@
                     </td>
 
                     <td>
-                        {{ $tracks->created_at->format('l, M-F-Y @ H:i A') }}
+                        {{ $tracks->created_at->format('l, M-Y @ H:i A') }}
                     </td>
 
                     <td class="text-center">
