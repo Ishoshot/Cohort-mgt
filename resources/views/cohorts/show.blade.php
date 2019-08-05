@@ -111,11 +111,22 @@
                     </div>
 
                     <div class="tab-pane fade" id="topics" role="tabpanel" aria-labelledby="pills-topics-tab">
-                        @forelse ($cohort->track->topics as $topic)
-                            <h4>{{ $topic->name }}</h4>
-                        @empty
-
-                        @endforelse
+                        <table class="table table-hover">
+                            <thead class="bg-light">
+                                <tr align="center">
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Duration</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($cohort->track->topics as $topic)
+                                    <tr>
+                                        <td>{{ $topic->title }}</td>
+                                        <td>{{ $topic->duration }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
 
                     <div class="tab-pane fade" id="schedule" role="tabpanel" aria-labelledby="pills-schedule-tab">...</div>

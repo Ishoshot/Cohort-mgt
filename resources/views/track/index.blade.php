@@ -116,7 +116,7 @@
 
                             <input id="title"
                             name="title" type="text"
-                            class="form-control form-control-user @error('title') is-invalid @enderror"
+                            class="form-control @error('title') is-invalid @enderror"
                             autofocus rows="5" placeholder="~e.g Full Stack Web Development"/>
 
                             @error('title')
