@@ -117,7 +117,7 @@
                 </button>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body py-4">
                 <form  action="/students/create" method="POST">
                     @csrf
                 <div class="row">
@@ -154,6 +154,42 @@
                         @enderror
                     </div>
                 </div>
+
+                <div class="row">
+
+                    <div class="form-group col-6">
+                        <label for="email" class="col-form-label font-weight-bold">{{ __('e-Mail') }}</label>
+                        <input id="email"
+                        name="email"
+                        type="text"
+                        placeholder="e.g johndoe@fofxacademy.com"
+                        class="form-control @error('email') is-invalid @enderror"
+                        autofocus rows="5" />
+
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-6">
+                        <label for="phone" class="col-form-label font-weight-bold">{{ __('Phone No.') }}</label>
+                        <input id="phone"
+                        name="phone"
+                        type="text"
+                        placeholder="+2348100003"
+                        class="form-control @error('phone') is-invalid @enderror"
+                        autofocus rows="5" />
+
+                        @error('phone')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="form-group col-6">
                             <label for="username" class="col-form-label font-weight-bold">{{ __('Username') }}</label>
@@ -223,7 +259,7 @@
 
                     <div class="modal-footer d-flex row pt-4 justify-content-between">
                         <div class="ml-3">
-                            <button class="btn btn-primary">Add Topic</button>
+                            <button class="btn btn-primary">Add Student</button>
                         </div>
 
                         <div class="mr-3">
@@ -278,12 +314,12 @@
                         <td>{{$student->firstname}}</td>
                         <td>{{$student->lastname}}</td>
                         <td>{{$student->username}}</td>
-                        <td>{{$student->cohort->name}}</td>
+                        <td>{{ $student->cohort->name}}</td>
 
                         <td class="text-center">
-                                <a class="btn btn-outline-primary" role="button" href="/students/{{ $student->id }}">
-                                    <i class="fa fa-eye"></i> View
-                                </a>
+                            <a class="btn btn-outline-primary" role="button" href="/students/{{ $student->id }}">
+                                <i class="fa fa-eye"></i> View
+                            </a>
                         </td>
 
                         <td class="text-center">

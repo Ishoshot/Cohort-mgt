@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Topic;
 use App\Cohort;
 use App\Track;
+use App\Student;
+
 
 class CohortsController extends Controller
 {
@@ -127,6 +129,7 @@ class CohortsController extends Controller
     public function destroy($id)
     {
         Cohort::find($id)->delete($id);
+        Student::where('cohort_id', '=', $id)->delete();
 
          return response()->json([
              'success' => 'Record deleted successfully!'

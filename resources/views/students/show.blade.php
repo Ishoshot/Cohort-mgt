@@ -77,13 +77,15 @@
         <div class="card">
 
             <div class="card-header bg-light">
-                <h2 class="text-dark">Students</h2>
+                <h2 class="text-dark"><i class="fa fa-info-circle"></i> Details</h2>
             </div>
 
             <div class="card-body" id="content">
-                <div class="col-md-12 text-center">
-                    <h4 class="font-weight-bold">{{ $student->firstname }} {{ $student->lastname }}</h4>
+                <div class="col-md-12">
+                    <h4 class="font-weight-bold mb-2">{{ $student->firstname }} {{ $student->lastname }}</h4>
                     <p>Username: {{ $student->username }}</p>
+                    <p>E-mail: {{ $student->email }}</p>
+                    <p>Phone No: {{ $student->phone }}</p>
                     <p>Cohort: {{ $student->cohort->name }}</p>
                     <p>Emergency Contact: {{ $student->e_contact }}</p>
                     <p>Emegergency Phone: {{ $student->e_phone }}</p>

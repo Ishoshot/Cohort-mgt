@@ -19,8 +19,8 @@ class StudentsController extends Controller
         $time = date('H:i A');
 
         $cohorts = Cohort::where('status', 1)->latest()->get();
-
         $students = Student::orderBy('lastname')->orderBy('cohort_id')->paginate(5);
+
         return view('students.index', compact('date', 'time', 'cohorts','students'));
     }
 
@@ -45,6 +45,8 @@ class StudentsController extends Controller
         $data = $request->validate([
             'firstname' => ['required','min:3','string'],
             'lastname' => ['required', 'min:3', 'string'],
+            'email' => ['required', 'min:3', 'string'],
+            'phone' => ['required', 'min:3', 'string'],
             'username' => ['required', 'min:3', 'string'],
             'cohort' => ['required'],
             'e_contact' => ['required', 'min:3', 'string'],
@@ -54,6 +56,8 @@ class StudentsController extends Controller
         Student::create([
             'firstname' => $data['firstname'],
             'lastname' => $data['lastname'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
             'username' => $data['username'],
             'cohort_id' => $data['cohort'],
             'e_contact' => $data['e_contact'],
