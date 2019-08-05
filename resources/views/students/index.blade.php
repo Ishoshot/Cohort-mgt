@@ -281,9 +281,9 @@
                         <td>{{$student->cohort->name}}</td>
 
                         <td class="text-center">
-                            <button class=" btn btn-outline-primary"
-                                id="del" data-id="{{ $student->id }}"><i class="fa fa-eye"></i>
-                            </button>
+                                <a class="btn btn-outline-primary" role="button" href="/students/{{ $student->id }}">
+                                    <i class="fa fa-eye"></i> View
+                                </a>
                         </td>
 
                         <td class="text-center">

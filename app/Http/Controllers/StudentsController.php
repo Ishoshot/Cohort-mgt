@@ -69,9 +69,13 @@ class StudentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Student $student)
     {
         //
+        $date = date('l, m-F-Y');
+        $time = date('H:i A');
+
+        return view('students.show', compact('student','date','time'));
     }
 
     /**

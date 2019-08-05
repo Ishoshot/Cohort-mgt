@@ -92,16 +92,15 @@
 
 
 <form action="#" method="POST">
-
-    <div class="input-group date">
-        <input type="text" class="form-control">
-    </div>
-
-    <button type="submit" id="submit">Submit</button>
-
+        <div class="input-group date" data-provide="datepicker">
+                 <input type="text" class="form-control">
+                 <div class="input-group-addon">
+                     <span class="glyphicon glyphicon-th"></span>
+                 </div>
+        </div>
 </form>
 
-    {{-- BUTTON FOR MODAL POPUP --}}
+{{-- BUTTON FOR MODAL POPUP --}}
     <div class="col-sm-12">
         <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
         {{ 'Add New' }} <i class="fa fa-plus"></i>
@@ -400,14 +399,12 @@
             });
 
         });
-
         $('.input-group.date').datepicker({
-        autoclose: true,
-        daysOfWeekDisabled: [0, 6],
-        todayHighlight: true,
-        format: "dd-mm-yyyy",
-        startDate: '30-07-2019'
-        });
-
+            autoclose: true,
+            daysOfWeekDisabled: [0, 6],
+            todayHighlight: true,
+            format: "dd-mm-yyyy",
+            startDate: new Date()
+  });
     </script>
 @endsection
