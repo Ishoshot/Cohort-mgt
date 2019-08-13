@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Topic;
-
 use App\Track;
-
 use App\Cohort;
+use App\Schedule;
 
 class TopicsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -106,9 +110,21 @@ class TopicsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Topic $topic)
     {
-        //
+        $data = request()->validate([
+            'start_date' => ['required','date'],
+            'end_date' => ['required','date'],
+        ]);
+
+        $topic->update([
+            'start_date' => $data['start_date'],
+            'end_date' => $data['end_date'],
+        ]);
+
+        return back();
+
+        // dd('Hello');
     }
 
     /**
@@ -120,6 +136,8 @@ class TopicsController extends Controller
     public function destroy($id)
     {
         Topic::find($id)->delete($id);
+        Schedule::where('topic_id', '=', $id)->delete();
+
         return response()->json([
          'success' => 'Record deleted successfully!'
         ]);

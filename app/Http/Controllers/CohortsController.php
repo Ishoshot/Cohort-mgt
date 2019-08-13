@@ -8,10 +8,16 @@ use App\Topic;
 use App\Cohort;
 use App\Track;
 use App\Student;
+use App\Schedule;
 
 
 class CohortsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -94,7 +100,9 @@ class CohortsController extends Controller
         $date = date('l, m-F-Y');
         $time = date('H:i A');
 
-        return view('cohorts.show', compact('cohort','date','time'));
+        $schedules = Schedule::where('cohort_id', '=', $cohort->id)->get();
+
+        return view('cohorts.show', compact('cohort','date','time','schedules'));
     }
 
     /**
@@ -130,6 +138,7 @@ class CohortsController extends Controller
     {
         Cohort::find($id)->delete($id);
         Student::where('cohort_id', '=', $id)->delete();
+        Schedule::where('cohort_id','=',$id)->delete();
 
          return response()->json([
              'success' => 'Record deleted successfully!'

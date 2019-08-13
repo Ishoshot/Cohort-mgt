@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class StudentsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**;
      * Display a listing of the resource.
      *
@@ -47,11 +52,16 @@ class StudentsController extends Controller
             'lastname' => ['required', 'min:3', 'string'],
             'email' => ['required', 'min:3', 'string'],
             'phone' => ['required', 'min:3', 'string'],
-            'username' => ['required', 'min:3', 'string'],
+            'username' => ['required', 'min:3', 'string','unique:students'],
             'cohort' => ['required'],
             'e_contact' => ['required', 'min:3', 'string'],
             'e_phone' => ['required', 'min:3', 'string']
         ]);
+
+        $key = $data['cohort'];
+        $cohort = Cohort::where('id', '=', $key)->first();
+        $track_id = $cohort->track_id;
+
 
         Student::create([
             'firstname' => $data['firstname'],
@@ -61,7 +71,8 @@ class StudentsController extends Controller
             'username' => $data['username'],
             'cohort_id' => $data['cohort'],
             'e_contact' => $data['e_contact'],
-            'e_phone' => $data['e_phone']
+            'e_phone' => $data['e_phone'],
+            'track_id' => $track_id
         ]);
 
         return redirect('/students');
