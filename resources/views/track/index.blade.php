@@ -108,7 +108,8 @@
                 </div>
 
                 <div class="modal-body">
-                    <form action="/track/create" method="POST">
+                    <form action="/track/create" class="needs-validation" novalidate method="POST">
+
                         @csrf
 
                         <div class="form-group">
@@ -117,7 +118,11 @@
                             <input id="title"
                             name="title" type="text"
                             class="form-control @error('title') is-invalid @enderror"
-                            autofocus rows="5" placeholder="~e.g Full Stack Web Development"/>
+                            autofocus rows="5" required placeholder="~e.g Full Stack Web Development"/>
+
+                            <div class="invalid-feedback">
+                                Track field cannot be empty
+                            </div>
 
                             @error('title')
                             <span class="invalid-feedback" role="alert">
@@ -126,6 +131,7 @@
                             @enderror
 
                         </div>
+
                         <div class="form-group">
                                 <label for="track" class="col-form-label font-weight-bold">{{ __('Status') }}</label><br/>
 
@@ -138,7 +144,6 @@
                                     <input type="radio" id="inactive_track" class="form-radio" name="track_status"
                                     Value="0"> <label for="inactive_track">InActive</label>
                                 </div>
-
                         </div>
 
                         <div class="modal-footer d-flex row pt-4 justify-content-between">
@@ -333,6 +338,7 @@
                 }
             });
         });
+
 
 </script>
 

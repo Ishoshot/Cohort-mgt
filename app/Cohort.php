@@ -15,4 +15,5 @@ class Cohort extends Model
     public function students(){
         return $this->hasMany(Student::class);
     }
+
 }

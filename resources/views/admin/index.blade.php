@@ -139,7 +139,20 @@
                 </div>
             </div>
         </div>
-    
+
+        <div class="card col-md-4 mt-5 p-3">
+            <div class="card-body bg-flat-color-0">
+            <div class="div-square">
+                <a href="/pair">
+                <i class="fa fa-male fa-5x"></i>
+                <i class="fa fa-female fa-5x"></i>
+                <h4 class="pt-4">MANAGE PAIRS</h4>
+                </a>
+                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-1" style="width: 80%; height: 5px;"></div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 

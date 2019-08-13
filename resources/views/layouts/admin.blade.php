@@ -23,7 +23,7 @@
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap-toggle.min.js') }}"></script>
-
+    <!-- Droppable only -->
 
     {{--  <!-- Styles -->  --}}
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -74,6 +74,10 @@
 
                     <li>
                         <a href="/students"> <i class="menu-icon fa fa-graduation-cap"></i>Manage Students</a>
+                    </li>
+
+                    <li>
+                        <a href="/pair"><i class="menu-icon fa fa-male"></i>Manage Pairs </a>
                     </li>
 
                     <h3 class="menu-title">Extras</h3><!-- /.menu-title -->

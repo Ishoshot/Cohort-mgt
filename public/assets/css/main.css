@@ -54,3 +54,52 @@ label
 .invalid input:required:valid {
   background: #17D654;
 }
+
+/* Play With Box Settings */
+
+.box {
+    width: 150px;  /* content width */
+    max-width:150px;
+    cursor: move !important;
+    height: 100px;  /* content height */
+    padding: 20px;  /*space between content and border*/
+    margin: 20px;  /*space between border and other elements*/
+    border-radius:0px; /* round corners */
+    /* background-color:#F4F4F4; try red, orange, ...    */
+  }
+
+/* DRAG AND DROP */
+  main {
+      display:table-cell;
+      vertical-align:middle;
+      text-align:center;
+  }
+
+  .wrapper {
+      width:auto;
+      display:inline-block;
+      padding:15px;
+      border:1px solid  black;
+      background-color:white; /* try red, orange, ... */
+  }
+
+  .wrapper-drop {
+    width: 200px;  /* content width */
+    max-width:200px;
+    height: 150px;  /* content height */
+    padding: 15px;
+    margin: 0 auto;
+    background-color:#ffffff;
+    border: 1px solid black;
+    transition: all ease-in-out 0.8s;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+}
+
+.wrapper-drop:hover {
+    border:2px dotted  black;
+}
+
+
+

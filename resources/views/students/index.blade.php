@@ -118,7 +118,7 @@
             </div>
 
             <div class="modal-body py-4">
-                <form  action="/students/create" method="POST">
+                <form  action="/students/create" class="needs-validation" novalidate method="POST">
                     @csrf
                 <div class="row">
 
@@ -128,8 +128,12 @@
                         name="firstname"
                         type="text"
                         placeholder="e.g John"
-                        class="form-control @error('title') is-invalid @enderror"
-                        autofocus rows="5" />
+                        class="form-control @error('firstname') is-invalid @enderror"
+                        required autofocus rows="5" />
+
+                        <div class="invalid-feedback">
+                            Please enter firstname
+                        </div>
 
                         @error('firstname')
                             <span class="invalid-feedback" role="alert">
@@ -144,8 +148,12 @@
                         name="lastname"
                         type="text"
                         placeholder="e.g Doe"
-                        class="form-control @error('title') is-invalid @enderror"
-                        autofocus rows="5" />
+                        class="form-control @error('lastname') is-invalid @enderror"
+                        autofocus required rows="5" />
+
+                        <div class="invalid-feedback">
+                            Please enter lastname
+                        </div>
 
                         @error('lastname')
                             <span class="invalid-feedback" role="alert">
@@ -164,7 +172,11 @@
                         type="text"
                         placeholder="e.g johndoe@fofxacademy.com"
                         class="form-control @error('email') is-invalid @enderror"
-                        autofocus rows="5" />
+                        autofocus required rows="5" />
+
+                        <div class="invalid-feedback">
+                            Please enter email
+                        </div>
 
                         @error('email')
                             <span class="invalid-feedback" role="alert">
@@ -180,7 +192,11 @@
                         type="text"
                         placeholder="+2348100003"
                         class="form-control @error('phone') is-invalid @enderror"
-                        autofocus rows="5" />
+                        autofocus required rows="5" />
+
+                        <div class="invalid-feedback">
+                                Please enter phone number
+                        </div>
 
                         @error('phone')
                             <span class="invalid-feedback" role="alert">
@@ -198,8 +214,10 @@
                             type="text"
                             placeholder="e.g john.doe"
                             class="form-control @error('username') is-invalid @enderror"
-                            autofocus rows="5" />
-
+                            autofocus required rows="5" />
+                            <div class="invalid-feedback">
+                                Please enter username
+                            </div>
                             @error('username')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -207,20 +225,22 @@
                             @enderror
                     </div>
                     <div class="form-group col-6">
-                            <label for="cohort" class="col-form-label font-weight-bold">{{ __('Cohort') }}</label>
-                            <select name="cohort"
-                            class="form-control @error('cohort') is-invalid @enderror">
-                                <option value="">~ Please Select Cohort ~</option>
-                                @foreach ($cohorts as $cohort)
-                                    <option value="{{ $cohort->id }}">{{ $cohort->name }}</option>
-                                @endforeach
-                            </select>
-
-                            @error('cohort')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                        <label for="cohort" class="col-form-label font-weight-bold">{{ __('Cohort') }}</label>
+                        <select name="cohort" id="cohort"
+                        class="form-control @error('cohort') is-invalid @enderror" required>
+                            <option value="">~ Please Select Cohort ~</option>
+                            @foreach ($cohorts as $cohort)
+                                <option value="{{ $cohort->id }}">{{ $cohort->name }}</option>
+                            @endforeach
+                        </select>
+                        <div class="invalid-feedback">
+                                Please select a cohort
+                        </div>
+                        @error('cohort')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                 </div>
                 <div class="row">
@@ -231,8 +251,11 @@
                             type="text"
                             placeholder="e.g Mrs. Dora Doe"
                             class="form-control @error('e_contact') is-invalid @enderror"
-                            autofocus rows="5" />
+                            autofocus required rows="5" />
 
+                            <div class="invalid-feedback">
+                             Emergency contact is required
+                            </div>
                             @error('e_contact')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -247,8 +270,11 @@
                             type="text"
                             placeholder="e.g +234810000000"
                             class="form-control @error('e_phone') is-invalid @enderror"
-                            autofocus rows="5" />
+                            autofocus required rows="5" />
 
+                            <div class="invalid-feedback">
+                                    Emergency phone number is required
+                            </div>
                             @error('e_phone')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
