@@ -201,6 +201,13 @@
                                 <option value="{{ $i }}">{{ $i." days" }}</option>
                             @endfor
                         </select>
+                        <label for="duration" class="col-form-label font-weight-bold">{{ __('Topic Duration (in days)') }}</label>
+                        <input id="duration"
+                        name="duration"
+                        type="number" 
+                        placeholder="e.g 4"
+                        class="form-control @error('duration') is-invalid @enderror"
+                        autofocus min="0"/>
 
                         <div class="invalid-feedback">
                             Please choose topic duration

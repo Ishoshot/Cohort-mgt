@@ -6,8 +6,14 @@ use Illuminate\Http\Request;
 use App\Track;
 use App\Topic;
 use App\Cohort;
+use App\Student;
 class TrackController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -19,8 +25,10 @@ class TrackController extends Controller
         $date = date('l, m-F-Y');
         $time = date('H:i A');
 
+        // dd($request->ip());
+
         //Fetch latest tracks from DB
-        $track = Track::latest()->paginate(10);
+        $track = Track::orderBy('title')->latest()->paginate(5);
 
         //Get total count of tracks
         return view('track.index', compact('date', 'time', 'track'));
@@ -59,7 +67,6 @@ class TrackController extends Controller
      */
     public function store(Request $request)
     {
-
         $data = $request->validate([
             'title' => ['required', 'unique:tracks', 'string'],
             'track_status' =>'required'
@@ -120,6 +127,7 @@ class TrackController extends Controller
         Track::find($id)->delete($id);
         Topic::where('track_id', '=', $id)->delete();
         Cohort::where('track_id', '=', $id)->delete();
+        Student::where('track_id', '=', $id)->delete();
 
          return response()->json([
              'success' => 'Record deleted successfully!'

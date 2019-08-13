@@ -185,6 +185,7 @@
                     <tr>
                         <th scope="col">Title</th>
                         <th scope="col">Created On</th>
+                        <th scope="col" style="text-align:center;">Offered by</th>
                         <th scope="col" style="text-align:center;">Status</th>
                         <th colspan="2" scope="col" style="text-align:center;">Action</th>
                     </tr>
@@ -199,6 +200,10 @@
 
                     <td>
                         {{ $tracks->created_at->format('l, M-Y @ H:i A') }}
+                    </td>
+
+                    <td class="text-center">
+                        {{ $tracks->cohorts->count() }}
                     </td>
 
                     <td class="text-center">
