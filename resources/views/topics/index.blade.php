@@ -127,18 +127,22 @@
             </div>
 
             <div class="modal-body">
-                <form action="/topics/create" method="POST">
+                <form action="/topics/create" class="needs-validation" novalidate method="POST">
                     @csrf
 
                     <div class="form-group">
                         <label for="index" class="col-form-label font-weight-bold">{{ __('Topic Index') }}</label>
-                        <select name="index"
-                        class="form-control @error('index') is-invalid @enderror">
+                        <select name="index" id="index"
+                        class="form-control @error('index') is-invalid @enderror" required>
                             <option value="">~ Please Select Index Number ~</option>
                             @for ($a = 1; $a <= 20 ; $a++)
                                 <option value="{{ $a }}">{{ $a }}</option>
                             @endfor
                         </select>
+
+                        <div class="invalid-feedback">
+                            Please choose an Index Number.
+                        </div>
 
                         @error('index')
                             <span class="invalid-feedback" role="alert">
@@ -154,7 +158,11 @@
                         type="text"
                         placeholder="e.g Introduction to Laravel"
                         class="form-control @error('title') is-invalid @enderror"
-                        autofocus rows="5" />
+                        autofocus rows="5" required/>
+
+                        <div class="invalid-feedback">
+                            Title Field Cannot be empty
+                        </div>
 
                         @error('title')
                             <span class="invalid-feedback" role="alert">
@@ -165,13 +173,17 @@
 
                     <div class="form-group">
                         <label for="track" class="col-form-label font-weight-bold">{{ __('Track') }}</label>
-                        <select name="track"
-                        class="form-control @error('track') is-invalid @enderror">
+                        <select name="track" id="track"
+                        class="form-control @error('track') is-invalid @enderror" required>
                             <option value="">~ Please Select Track ~</option>
                             @foreach ($tracks as $track)
                                 <option value="{{ $track->id }}">{{ $track->title }}</option>
                             @endforeach
                         </select>
+
+                        <div class="invalid-feedback">
+                            Please choose a track
+                        </div>
 
                         @error('track')
                             <span class="invalid-feedback" role="alert">
@@ -182,13 +194,17 @@
 
                     <div class="form-group">
                         <label for="duration" class="col-form-label font-weight-bold">{{ __('Topic Duration') }}</label>
-                        <select name="duration"
-                        class="form-control @error('duration') is-invalid @enderror">
+                        <select name="duration" id="duration"
+                        class="form-control @error('duration') is-invalid @enderror" required>
                             <option value="">~ Please Select Duration in Days ~</option>
                             @for ($i = 2; $i <= 10 ; $i++)
                                 <option value="{{ $i }}">{{ $i." days" }}</option>
                             @endfor
                         </select>
+
+                        <div class="invalid-feedback">
+                            Please choose topic duration
+                        </div>
 
                         @error('duration')
                             <span class="invalid-feedback" role="alert">
@@ -306,7 +322,6 @@
                 }
             });
         });
-
 </script>
 
 </div> <!-- .content -->

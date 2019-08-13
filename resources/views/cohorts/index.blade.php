@@ -91,15 +91,6 @@
 </div>
 
 
-<form action="#" method="POST">
-        <div class="input-group date" data-provide="datepicker">
-                 <input type="text" class="form-control">
-                 <div class="input-group-addon">
-                     <span class="glyphicon glyphicon-th"></span>
-                 </div>
-        </div>
-</form>
-
 {{-- BUTTON FOR MODAL POPUP --}}
     <div class="col-sm-12">
         <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
@@ -118,8 +109,8 @@
                     </button>
                 </div>
 
-                <div class="modal-body">
-                    <form action="/cohorts/create" method="POST">
+                <div class="modal-body py-4">
+                    <form action="/cohorts/create" class="needs-validation" novalidate method="POST">
                         @csrf
 
                         <div class="form-group">
@@ -128,7 +119,11 @@
                             <input id="name"
                             name="name" type="text"
                             class="form-control form-control-user @error('name') is-invalid @enderror"
-                            autofocus placeholder="~e.g Cohort One"/>
+                            autofocus required placeholder="~e.g Cohort One"/>
+
+                            <div class="invalid-feedback">
+                                    Please choose a cohort
+                            </div>
 
                             @error('name')
                                 <span class="invalid-feedback" role="alert">
@@ -140,14 +135,16 @@
 
                         <div class="form-group">
                             <label for="track" class="col-form-label font-weight-bold">{{ __('Track') }}</label>
-                            <select name="track"
-                            class="form-control @error('track') is-invalid @enderror">
+                            <select name="track" id="track"
+                            class="form-control @error('track') is-invalid @enderror" required>
                                 <option value="">~ Please Select Track ~</option>
                                 @foreach ($tracks as $track)
                                     <option value="{{ $track->id }}">{{ $track->title }}</option>
                                 @endforeach
                             </select>
-
+                            <div class="invalid-feedback">
+                                Please choose a track
+                            </div>
                             @error('track')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -160,8 +157,12 @@
 
                             <input id="location"
                             name="location" type="text"
-                            class="form-control form-control-user @error('location') is-invalid @enderror"
-                            autofocus placeholder="Enter location of cohort"/>
+                            class="form-control form-control @error('location') is-invalid @enderror"
+                            autofocus required placeholder="Enter location of cohort"/>
+
+                            <div class="invalid-feedback">
+                                Please enter a location
+                            </div>
 
                             @error('location')
                                 <span class="invalid-feedback" role="alert">
@@ -174,28 +175,42 @@
                         <div class="form-row">
 
                             <div class="form-group col-md-4">
+
                                 <label for="start_date" class="col-form-label font-weight-bold">{{ __('Start date') }}</label><br/>
+                                    <div class="input-group date start_date">
+                                        <input id="start_date" type="text" name="start_date"
+                                        class="form-control @error('start_date') is-invalid @enderror" required autofocus/>
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
 
-                                <input id="start_date"
-                                name="start_date" type="date"
-                                class="form-control form-control-user @error('start_date') is-invalid @enderror"
-                                autofocus/>
-
+                                    <div class="invalid-feedback">
+                                        Please pick a start date
+                                    </div>
                                 @error('start_date')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+
                             </div>
 
 
                             <div class="form-group col-md-4">
                                 <label for="end_date" class="col-form-label font-weight-bold">{{ __('End date') }}</label><br/>
 
-                                <input id="end_date"
-                                name="end_date" type="date"
-                                class="form-control form-control-user @error('end_date') is-invalid @enderror"
-                                autofocus/>
+                                    <div class="input-group date end_date">
+                                        <input id="end_date" type="text" name="end_date"
+                                        class="form-control @error('end_date') is-invalid @enderror" required autofocus/>
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="invalid-feedback">
+                                        Please pick an end date
+                                    </div>
 
                                 @error('end_date')
                                     <span class="invalid-feedback" role="alert">
@@ -208,13 +223,17 @@
                             <div class="form-group col-md-4">
                                 <label for="duration" class="col-form-label font-weight-bold">{{ __('Duration') }}</label>
 
-                                <select name="duration"
-                                class="form-control @error('duration') is-invalid @enderror">
+                                <select name="duration" id="durationn"
+                                class="form-control @error('duration') is-invalid @enderror" required>
                                     <option value="">~ Please Select Duration in Months ~</option>
                                     @for ($i = 3; $i <= 12 ; $i++)
                                         <option value="{{ $i." months" }}">{{ $i." months" }}</option>
                                     @endfor
                                 </select>
+
+                                <div class="invalid-feedback">
+                                    Please select a duration
+                                </div>
 
                                 @error('duration')
                                     <span class="invalid-feedback" role="alert">
@@ -399,12 +418,22 @@
             });
 
         });
-        $('.input-group.date').datepicker({
+
+        $('.input-group.date.start_date').datepicker({
             autoclose: true,
             daysOfWeekDisabled: [0, 6],
             todayHighlight: true,
             format: "dd-mm-yyyy",
-            startDate: new Date()
-  });
+            startDate: "0d",
+            todayBtn:true
+        });
+
+        $('.input-group.date.end_date').datepicker({
+            autoclose: true,
+            daysOfWeekDisabled: [0, 6],
+            todayHighlight: true,
+            format: "dd-mm-yyyy",
+            todayBtn:true
+        });
     </script>
 @endsection

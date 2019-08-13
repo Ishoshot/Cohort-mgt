@@ -46,3 +46,9 @@ Route::get('/students', 'StudentsController@index');
 Route::post('/students/create', 'StudentsController@store')->name('students.store');
 Route::delete('/students/{id}', 'StudentsController@destroy')->name('students.destroy');
 Route::get('/students/{student}', 'StudentsController@show')->name('students.show');
+
+//Pairs Route
+Route::get('/pair', 'PairController@index');
+Route::get('/pair/fetch', 'PairController@fetch')->name('pair.fetch');
+Route::post('/mappairs', 'PairController@mappairs')->name('pair.mappairs');
+
