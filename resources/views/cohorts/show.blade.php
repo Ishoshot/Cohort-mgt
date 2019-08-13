@@ -53,7 +53,7 @@
     <div class="col-sm-4">
         <div class="page-header float-left">
             <div class="page-title">
-                <h1 class="font-weight-bold">Manage Cohorts</h1>
+                <h1 class="font-weight-bold"><i class="fa fa-users"></i> {{ $cohort->name }}</h1>
             </div>
         </div>
     </div>
@@ -102,11 +102,12 @@
                 <div class="tab-content" id="pills-tabContent">
 
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <div class="col-md-12 text-center">
-                            <h4 class="font-weight-bold">{{ $cohort->name }}</h4>
+                        <div class="col-md-12">
+                            {{-- <h4 class="font-weight-bold mb-3">{{ $cohort->name }}</h4> --}}
                             <p>Track: {{ $cohort->track->title }}</p>
                             <p>Track status: {{ $cohort->status }}</p>
                             <p>Active from: {{ $cohort->start_date .' to '. $cohort->end_date }}</p>
+                            <p>Number of Students: {{ count($cohort->students) }}</p>
                             <p>Duration: {{ $cohort->duration }}</p>
                             <p>Location: {{ $cohort->location }}</p>
                             <p>Created on: {{ $cohort->created_at->format('l, M-Y @ H:i A') }}</p>
@@ -115,6 +116,14 @@
 
 
                     <div class="tab-pane fade" id="topics" role="tabpanel" aria-labelledby="pills-topics-tab">
+                        @if(count($cohort->track->topics) < 1)
+                            <div class="alert  alert-warning alert-dismissible fade show" role="alert">
+                                <i class="fa fa-volume-up"></i>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>There are no topics yet !!! Add topics to the track offered by this cohort.
+                            </div>
+                        @else
                         <table class="table table-hover">
                             <thead class="bg-light">
                                 <tr>
@@ -124,17 +133,26 @@
                             </thead>
                             <tbody>
                                 @foreach ($cohort->track->topics as $topic)
-                                    <tr>
+                                     <tr>
                                         <td>{{ $topic->title }}</td>
                                         <td class="text-center">{{ $topic->duration.' days' }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                        @endif
                     </div>
 
 
                     <div class="tab-pane fade" id="students" role="tabpanel" aria-labelledby="pills-students-tab">
+                        @if(count($cohort->students) < 1)
+                            <div class="alert  alert-warning alert-dismissible fade show" role="alert">
+                                <i class="fa fa-volume-up"></i>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>There are no students yet !!! Newly added students will appear here.
+                            </div>
+                        @else
                         <table class="table table-hover">
                             <thead class="bg-light">
                                 <tr>
@@ -148,8 +166,8 @@
                                 @foreach ($cohort->students as $student)
                                     <tr>
                                         <td>{{ $student->firstname .' '. $student->firstname }}</td>
-                                        <td >{{ 'email' }}</td>
-                                        <td class="text-center">{{ 'phone' }}</td>
+                                        <td>{{ $student->email }}</td>
+                                        <td class="text-center">{{ $student->phone }}</td>
                                         <td class="text-center">
                                            {{ $student->created_at->format('l, M-Y @ H:i A') }}
                                         </td>
@@ -157,49 +175,104 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        @endif
                     </div>
 
 
-
                     <div class="tab-pane fade" id="schedule" role="tabpanel" aria-labelledby="pills-schedule-tab">
+                        @if(!count($schedules))
+                        <div class="col-md-12 p-0 mb-3">
+                            <div class="float-right">
+                               <form method="POST" action="/schedule/generate/{{$cohort->id}}">
+                                @csrf
+                                <button class="btn btn-primary">
+                                    <i class="fa fa-download"></i> Generate
+                                </button>
+                               </form>
+                            </div>
+                        </div>
+                        <div class="col-md-12 alert alert-warning alert-dismissible fade show" role="alert">
+                            <i class="fa fa-volume-up"></i>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>Oops! No Schedule found. Click on the button below to generate.
+                        </div>
+                        @else
                         <table class="table table-hover">
                             <thead class="bg-light">
                                 <tr>
-                                    <th scope="col">Cohort</th>
                                     <th scope="col">Title</th>
                                     <th scope="col" class="text-center">Duration</th>
                                     <th scope="col" class="text-center">Start date</th>
                                     <th scope="col" class="text-center">Finish date</th>
+                                    <th scope="col" class="text-center"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <form action="">
-                                @foreach ($cohort->track->topics as $topic)
+
+                                @foreach ($schedules as $schedule)
+                                <form action="/topics/update/{{ $topic->id }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
                                     <tr>
+
                                         <td>
-                                            {{ $cohort->name }}
+                                            {{ $schedule->title }}
+                                            <input type="hidden" name="title" value="{{ $schedule->title }}">
                                         </td>
+
+                                        <td class="text-center">
+                                            {{ $schedule->duration.' days' }}
+                                            <input type="hidden" name="duration" value="{{ $schedule->duration }}">
+                                        </td>
+
+                                        <td class="text-center">
+                                            <div class="input-group start-date date">
+                                                <input id="start_date" type="text"
+                                                name="start_date" value="{{ $schedule->start_date }}"
+                                                class="form-control @error('start_date') is-invalid @enderror" autofocus
+                                                autocomplete="off"/>
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+
+                                            @error('start_date')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </td>
+
+                                        <td class="text-center">
+                                            <div class="input-group end-date date">
+                                                <input id="end_date" type="text"
+                                                name="end_date" value="{{ $schedule->end_date }}"
+                                                class="form-control @error('end_date') is-invalid @enderror"
+                                                autofocus autocomplete="off"/>
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+
+                                            @error('end_date')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </td>
+
                                         <td>
-                                            {{ $topic->title }}
-                                            <input type="hidden" name="title" value="{{ $topic->title }}">
-                                        </td>
-                                        <td class="text-center">
-                                            {{ $topic->duration.' days' }}
-                                            <input type="hidden" name="duration" value="{{ $topic->duration }}">
-                                        </td>
-                                        <td class="text-center">
-                                            {{ 'date' }}
-                                            <input type="hidden" name="startdate">
-                                        </td>
-                                        <td class="text-center">
-                                            {{ 'date' }}
-                                            <input type="hidden" name="enddate">
+                                            <button class="btn btn-primary">
+                                                <i class="fa fa-save text-white"></i>
+                                            </button>
                                         </td>
                                     </tr>
-                                @endforeach
                                 </form>
+                                @endforeach
                             </tbody>
                         </table>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -209,5 +282,45 @@
 </div> <!-- .content -->
 </div><!-- /#right-panel -->
 {{-- <!-- Right Panel --> --}}
+
+<script>
+
+    $('.input-group.start-date').datepicker({
+        autoclose: true,
+        daysOfWeekDisabled: [0, 6],
+        todayHighlight: true,
+        format: "dd-mm-yyyy",
+        startDate: '0d'
+    });
+
+    $('.input-group.end-date').datepicker({
+        autoclose: true,
+        daysOfWeekDisabled: [0, 6],
+        todayHighlight: true,
+        format: "dd-mm-yyyy"
+    });
+
+    $('#start_date').change(function() {
+        var date = $(this).val();
+        var ndate = new Date(date);
+        var newdate = new Date(ndate);
+
+        console.log(newdate);
+
+        newdate.setDate(newdate.getDate() + 3);
+
+        var dd = newdate.getDate();
+        var mm = newdate.getMonth() + 1;
+        var y = newdate.getFullYear();
+
+        var someFormattedDate = dd + '-' + mm + '-' + y;
+
+        console.log(someFormattedDate);
+
+        document.getElementById('end_date').value = someFormattedDate;
+    });
+
+
+</script>
 
 @endsection

@@ -181,14 +181,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="duration" class="col-form-label font-weight-bold">{{ __('Topic Duration') }}</label>
-                        <select name="duration"
-                        class="form-control @error('duration') is-invalid @enderror">
-                            <option value="">~ Please Select Duration in Days ~</option>
-                            @for ($i = 2; $i <= 10 ; $i++)
-                                <option value="{{ $i }}">{{ $i." days" }}</option>
-                            @endfor
-                        </select>
+                        <label for="duration" class="col-form-label font-weight-bold">{{ __('Topic Duration (in days)') }}</label>
+                        <input id="duration"
+                        name="duration"
+                        type="number"
+                        placeholder="e.g 4"
+                        class="form-control @error('duration') is-invalid @enderror"
+                        autofocus min="0"/>
 
                         @error('duration')
                             <span class="invalid-feedback" role="alert">

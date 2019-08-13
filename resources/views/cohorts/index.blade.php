@@ -91,15 +91,6 @@
 </div>
 
 
-<form action="#" method="POST">
-        <div class="input-group date" data-provide="datepicker">
-                 <input type="text" class="form-control">
-                 <div class="input-group-addon">
-                     <span class="glyphicon glyphicon-th"></span>
-                 </div>
-        </div>
-</form>
-
 {{-- BUTTON FOR MODAL POPUP --}}
     <div class="col-sm-12">
         <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">

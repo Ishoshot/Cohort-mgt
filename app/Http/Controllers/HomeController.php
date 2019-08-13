@@ -21,7 +21,8 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+
+    public function home()
     {
         $date = date('l, m-F-Y');
         $time = date('H:i:A');

@@ -12,12 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+	return view('attendance.welcome');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@home')->name('home');
 
 
 // Track Routes
@@ -32,6 +32,7 @@ Route::delete('/track/{id}', 'TrackController@destroy')->name('track.destroy');
 Route::get('/topics', 'TopicsController@index')->name('topics');
 Route::post('/topics/create', 'TopicsController@store')->name('topics.store');
 Route::delete('/topics/{id}', 'TopicsController@destroy')->name('topics.destroy');
+Route::patch('/topics/update/{topic}', 'TopicsController@update')->name('topics.update');
 
 
 // Cohort Route
@@ -40,6 +41,10 @@ Route::post('/cohorts/create', 'CohortsController@store')->name('cohorts.store')
 Route::get('/cohortStatus', 'CohortsController@cohortStatus');
 Route::delete('/cohorts/{id}', 'CohortsController@destroy')->name('cohorts.destroy');
 Route::get('/cohorts/{cohort}', 'CohortsController@show')->name('cohorts.show');
+
+//Schedule
+Route::post('/schedule/generate/{id}', 'ScheduleController@generate')->name('schedule.generate');
+
 
 // Students Route
 Route::get('/students', 'StudentsController@index');
