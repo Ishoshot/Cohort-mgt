@@ -46,6 +46,8 @@ class AttendanceController extends Controller
            'username' => ['required'],
             'cohort' => ['required']
         ]);
+
+        $system_ip = $request->ip();
         
         $username = trim($data['username']);
 
@@ -70,18 +72,29 @@ class AttendanceController extends Controller
             return response()->json(['message'=> $message]);       
         } 
 
-        //To get topic 
+        //To get schedule 
         $query = $cohort->schedule;
 
+        if ($query == null) {
+            $message = 'There was a problem while taking the Attendance! If problem persists, kindly call the attention of your co-ordinator.';
+            return response()->json(['message' => $message]);
+        }
+
+        //To get topic
         $topic = $query->where('start_date', '<=', date('Y-m-d'))
             ->where('end_date', '>=', date('Y-m-d'))->first();
+
+        if (!$topic) {
+            $message = 'There was a problem while taking the Attendance! If problem persists, kindly call the attention of your co-ordinator.';
+            return response()->json(['message' => $message]);
+        }
 
         //To check if exists
         $exists = Attendance::where('username', '=', $student->username)
         ->whereDate('created_at', '=', date('Y-m-d'))->first();
 
         if ($exists) {
-            $message = $student->lastname.', Your attendance for today has been taken. If not you, kindly call the attention your co-ordinator.';
+            $message = $student->lastname.', Your attendance for today has been taken. If not you, kindly call the attention of your co-ordinator.';
             return response()->json(['message' => $message]);
         }
 
@@ -94,7 +107,7 @@ class AttendanceController extends Controller
         'pair_fullname' => 'Adesanya Boiy',
         'topic' => $topic->title,
         'cohort' => $cohort->name,
-        'system_ip' => '127.0.0.012.34.56.6.78.89'
+        'system_ip' => $system_ip
         ]);
 
         //Response for Attendance
