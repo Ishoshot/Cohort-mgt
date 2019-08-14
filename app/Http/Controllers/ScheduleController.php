@@ -54,18 +54,33 @@ class ScheduleController extends Controller
         $cohort = Cohort::findorfail($request->id);
         $topics = $cohort->track->topics;
         $dataSet = [];
+        $newStart_date = '';
         foreach($topics as $topic)
         {
+            if($topic->first()) {
+                $start_date = strtotime($cohort->start_date);
+                // dd(($topic->duration));
+                $end_date = date('Y-m-d',$start_date)->addDays(2);
+            }
+            else{
+                $start_date = $newStart_date;
+                $end_date = $start_date + $topic->duration;
+            }
+
+            $newStart_date = $end_date + 1;
+
             $dataSet[] = [
             'cohort_id' => $request->id,
             'title' => $topic->title,
             'topic_id' => $topic->id,
             'duration' => $topic->duration,
             'track' => $cohort->track->title,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
             ];
         }
 
-         Schedule::insert($dataSet);
+        Schedule::insert($dataSet);
 
          return redirect('/cohorts/'.$request->id);
 

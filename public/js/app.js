@@ -3548,11 +3548,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       cohorts: [],
       message: '',
+      pairInfo: '',
       success: '',
       username: '',
       cohort: '',
@@ -3612,6 +3618,11 @@ __webpack_require__.r(__webpack_exports__);
           _this2.message = '';
         }
 
+        if (res.data.pairInfo) {
+          _this2.pairInfo = res.data['pairInfo'];
+          _this2.message = '';
+        }
+
         _this2.username = '';
         _this2.cohort = '';
       })["catch"](function (error) {
@@ -3620,6 +3631,8 @@ __webpack_require__.r(__webpack_exports__);
           _this2.username = '';
           _this2.cohort = '';
         }
+
+        console.log(error);
       }); // }
     }
   }
@@ -98840,6 +98853,16 @@ var render = function() {
                               ]
                             )
                           ]
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.pairInfo
+                    ? _c("div", { staticClass: "blink" }, [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(_vm.pairInfo) +
+                            "\n                "
                         )
                       ])
                     : _vm._e(),
