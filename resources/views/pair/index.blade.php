@@ -73,13 +73,28 @@
 
 
 <div class="content mt-3">
-    <div class="card">
-        <div class="card-body">
+    {{-- BUTTON FOR MODAL POPUP --}}
+    <div class="col-sm-12">
+        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
+        {{ 'Map Pair' }} <i class="fa fa-plus"></i>
+        </button>
+    </div>
 
-        <div class="form-container d-flex justify-content-center text-center">
-            <form action="/pair/fetch" class="needs-validation col-6" novalidate id="form1" method="GET">
+    {{-- <!-- Modal --> --}}
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title font-weight-bold" style="color:#000;" id="exampleModalLabel">{{ 'Pair New Students' }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+        <div class="modal-body py-4">
+            <form action="/pair/fetch" class="needs-validation" novalidate id="form1" method="GET">
                 <div class="form-group">
-                        <label for="cohort" class="col-form-label font-weight-bold">{{ __('Which Cohort Does The Students You Want To Pair Belong To?') }}</label>
+                    <label for="cohort" class="col-form-label font-weight-bold">{{ __('Which Cohort Does The Students You Want To Pair Belong To?') }}</label>
                         <select name="cohort"
                         class="form-control @error('cohort') is-invalid @enderror" required>
                             <option value="">~ Please Select Cohort ~</option>
@@ -97,44 +112,113 @@
                         @enderror
                 </div>
 
-                <div class="mt-2">
-                    <button class="btn btn-primary" type="submit">Submit</button>
+                
+                <div class="modal-footer d-flex row pt-4 justify-content-between">
+                    <div class="ml-3">
+                        <button class="btn btn-primary">Pair Students</button>
+                    </div>
+                    <div class="mr-3">
+                        <button class="btn btn-danger" type="reset">Reset</button>
+                    </div>
                 </div>
             </form>
-        </div>
-        </div>
-    <div>
-
-
-    {{--  MODAL ON PAGE LOAD  --}}
-    <div class="card">
-        <div class="card-body">
-            <div class="container">
-                <div class="row">
-                    <div class="col-6">
-                    </div>
-                    <div class="col-6"
-
- {{--  <main>
-                            @foreach ($students as $student)
-
-                            <div class="wrapper">
-                                <div class="box">
-                                    {{ $student->firstname}}
-                                </div>
-                            </div>
-
-                            @endforeach
-                        </main>  --}}                    </div>
-                </div>
-            </div>
-        </div>
+         </div>
+       </div>
     </div>
-    </div> <!-- .content -->
-    </div><!-- /#right-panel -->
+</div>
+
+    {{--  TABLE TO DISPLAY ALL RECORDS IN COHORTS TABLES  --}}
+    <div class="col-md-12 mb-2 mt-3">
+            <div class="card">
+                <div class="card-header bg-primary">
+                    <h3 class="text-white"><i class ="fa fa-male"></i><i class ="fa fa-female"></i> Manage Pairs </h3>
+                </div>
+
+                <div class="card-body" id="content">
+
+                    {{-- Checks if the table is empty --}}
+                    @if(count($pairs) < 1)
+                    <div class="alert  alert-warning alert-dismissible fade show" role="alert">
+                        <i class="fa fa-volume-up"></i>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {{ 'Oops! There are currently no pairs available, Click on the button above to pair new students' }}
+                    </div>
+                    @else
+
+                    <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Pair Cohort</th>
+                            <th scope="col">Student One</th>
+                            <th scope="col">Student Two</th>
+                            <th scope="col">Pair Topic</th>
+                            <th scope="col" colspan="2" style="text-align:center;">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($pairs as $pair)
+                    <tr>
+
+                        <td>{{ $pair->cohort_name }}</td>
+
+                        <td>{{ $pair->student_one_fname }}</td>
+
+                        <td>{{ $pair->student_two_fname }}</td>
+
+                        <td>
+                            {{ $pair->topic_title}}
+                        </td>
+
+                        <td class="text-center">
+                            <button class="deleteRecord  btn btn-outline-danger" id="del" data-id="{{ $pair->id }}"><i class="fa fa-trash-o"></i></button>
+                        </td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                    </table>
+
+                    @endif
+                    <hr>
+                </div>
+
+                <div class="col-12 d-flex justify-content-center">
+                    {{ $pairs->links() }}
+                </div>
+
+            </div>
+            </div>
+
+        </div>
+</div> <!-- .content -->
+</div><!-- /#right-panel -->
 
     {{-- <!-- Right Panel --> --}}
 <script>
+ //DELETE REQUEST
+ $(".deleteRecord").click(function(){
+    var id = $(this).data("id");
+    var token = $("meta[name='csrf-token']").attr("content");
 
+    $.ajax(
+    {
+        url: "pair/"+id,
+        type: 'DELETE',
+        data: {
+            "id": id,
+            "_token": token,
+        },
+
+        success: function (data)
+        {
+            if (data.success)
+            {
+                window.location.reload(true);
+            }
+        }
+    });
+
+});
 </script>
 @endsection

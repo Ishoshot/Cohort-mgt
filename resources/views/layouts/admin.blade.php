@@ -80,6 +80,10 @@
                         <a href="/pair"><i class="menu-icon fa fa-male"></i>Manage Pairs </a>
                     </li>
 
+                    <li>
+                        <a href="/attendance"><i class="menu-icon fa fa-check"></i>Attendance </a>
+                    </li>
+
                     <h3 class="menu-title">Extras</h3><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-wrench"></i>Settings</a>

@@ -67,89 +67,89 @@
             </div>
         </div>
     </div>
+<div class="message"></div>
+
 
 <div class="content mt-3">
 
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-6 bg-dark">
-
-                    <hr>
-                    <form class="needs-validation" novalidate id="form1">
-                        <div class="form-group topic">
-                            <label for="topic" class="col-form-label text-white font-weight-bold">{{ __('Pair for topic') }}</label>
-                                <select name="topic"
-                                    class="form-control @error('topic') is-invalid @enderror" required>
-                                    <option value="">~ Please Select Topic ~</option>
-                                    @foreach ($topics as $topic)
-                                        <option value="{{ $topic->id }}">{{ $topic->title }}</option>
-                                    @endforeach
-                                </select>
-                            <div class="invalid-feedback">
-                                Please select a topic
-                            </div>
-                        </div>
-
-                        <div class="wrapper-drop mb-2 mt-5 studentI"  ondrop="drop(event)" ondragover="allowDrop(event)">
-
-                        </div>
-
-                        <div class="wrapper-drop studentII"  ondrop="drop(event)" ondragover="allowDrop(event)">
-
-                        </div>
-
-                   <div class="form-group text-center mt-3">
-                     <button type="submit" class="btn btn-primary btn-lg btn-pair">Pair</button>
-                   </div>
-
-                    </form>
-                </div>
-
-                <div class="col-6">
-                    <main>
-                        @foreach ($students as $student)
-                        <div class="wrapper mb-1" ondrop="drop(event)" ondragover="allowDrop(event)">
-                            <input type="button" name="student_id"
-                            class="box btn  btn-primary" id="{{ $student->username}}"
-                            data-id="{{$student->cohort_id}}" draggable="true" ondragstart="drag(event)"
-                            value="{{ $student->firstname}} {{ $student->lastname}}">
-                        </div>
+    <div class="row align-items-center d-flext justify-content-center text-dark">
+        <div class="col-sm-6">
+        <form class="needs-validation picktopic" novalidate>
+            <div class="form-group topic">
+                <label for="topic" class="col-form-label font-weight-bold">{{ __('Pair for topic') }}</label>
+                    <select name="topic"
+                        class="form-control pairfor @error('topic') is-invalid @enderror" required>
+                        <option value="">~ Please Select Topic ~</option>
+                        @foreach ($topics as $topic)
+                            <option value="{{ $topic->id }}">{{ $topic->title }}</option>
                         @endforeach
-                    </main>
+                    </select>
+                <div class="invalid-feedback">
+                    Please select a topic
                 </div>
             </div>
+        </form>
         </div>
+    </div>
+
+    <div class="container pairbox mt-4">
+    <div class="row">
+        <div class="col-6 text-center bg-dark">
+            <hr>
+            <form class="needs-validation" novalidate>
+
+                <div class="wrapper-drop studentI"  ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+                <div class="wrapper-drop studentII"  ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+                <div class="form-group text-center mt-3">
+                    <button type="submit" class="btn btn-primary rounded-lg btn-md btn-pair">Pair</button>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="col-6">
+            <main>
+                <div class="wrapper mb-1" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    @foreach ($students as $student)
+                    <input type="button" name="student_id"
+                    class="box btn btn-primary" id="{{ $student->username}}"
+                    data-id="{{$student->cohort_id}}" draggable="true" ondragstart="drag(event)"
+                    value="{{ $student->firstname}} {{ $student->lastname}}">
+                    @endforeach
+
+                </div>
+            </main>
+        </div>
+        </div>
+    </div>
     </div>
     </div> <!-- .content -->
     </div><!-- /#right-panel -->
 
     <script>
+    $(document).ready(function(){
+        $('select[name="topic"]').change(function(){
+            $('.picktopic').hide('slow');
+        });
+    });
 
     $(".btn-pair").click(function(e){
-
         e.preventDefault();
 
         //GET INPUT BOX FOR STUDENT ONE AND RETREIVE ALL DATA IN THEM
         var student_one = $('.studentI').find('input');
-        //GET STUDENT ONE FullNAME
-        var pairone_name = ($(student_one).attr('value'));
-        //GET STUDENT TWO USERNAME
-        var pairone_username = ($(student_one).attr('id'));
+        var pairone_name = ($(student_one).attr('value'));  //GET STUDENT ONE FULLNAME
+        var pairone_username = ($(student_one).attr('id')); //GET STUDENT ONE USERNAME
 
         //GET INPUT BOX FOR STUDENT TWO AND RETREIVE ALL DATA IN THEM
         var student_two = $('.studentII').find('input');
-        //GET STUDENT TWO FullNAME
-        var pairtwo_name = ((student_two).attr('value'));
-        //GET STUDENT TWO USERNAME
-        var pairtwo_username = ((student_two).attr('id'));
+        var pairtwo_name = ((student_two).attr('value'));  //GET STUDENT TWO FullNAME
+        var pairtwo_username = ((student_two).attr('id'));    //GET STUDENT TWO USERNAME
 
-        //STUDENTs COHORT
-        var cohort  = ((student_one).attr('data-id'));
-
-
-
-        //Topic info
-        var topic = $('select[name="topic"] option:selected').val();
+        var cohort  = ((student_one).attr('data-id')); //GET STUDENS COHORT
+        var topic = $('select[name="topic"] option:selected').val(); //GET TOPIC INFO
 
         console.log(pairone_name);
         console.log(pairtwo_name);
@@ -171,20 +171,37 @@
                 'student_one_fname': pairone_name,
                 'student_two_fname': pairtwo_name,
                 'cohort_id': cohort,
-                'topic_id': topic},
+                'topic_id': topic },
 
                 success: function (data)
                 {
-                    if (data.success)
+                    if (data.successmsg)
                     {
-                        console.log(data);
+                        $(".message").empty();
+                       $(".message").append(
+                           '<div class="alert  alert-success alert-dismissible fade show" role="alert"> <i class="fa fa-volume-up"></i><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+                            + data.successmsg+
+                            '</div>');
+                        console.log(data.successmsg);
+                        $(".studentI").empty();
+                        $(".studentII").empty();
+                    }
+
+                    if (data.pairExists)
+                    {
+                        $(".message").empty();
+                       $(".message").append(
+                           '<div class="alert  alert-warning alert-dismissible fade show" role="alert"> <i class="fa fa-volume-up"></i><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+                            + data.pairExists+
+                            '</div>');
+                        console.log(data.pairExists);
+                        $(".studentI").empty();
+                        $(".studentII").empty();
                     }
                 }
+
             });
 
     });
-
-
-
 </script>
 @endsection

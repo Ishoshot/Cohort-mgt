@@ -17,7 +17,7 @@ class CohortsController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +25,7 @@ class CohortsController extends Controller
      */
     public function index()
     {
-        $date = date('l, m-F-Y');
+        $date = date('l, d-F-Y');
         $time = date('H:i A');
 
         $tracks = Track::with('cohorts')->where('status', 1)->latest()->get();
@@ -97,7 +97,7 @@ class CohortsController extends Controller
      */
     public function show(Cohort $cohort)
     {
-        $date = date('l, m-F-Y');
+        $date = date('l, d-F-Y');
         $time = date('H:i A');
 
         $schedules = Schedule::where('cohort_id', '=', $cohort->id)->get();
@@ -136,7 +136,7 @@ class CohortsController extends Controller
      */
     public function destroy($id)
     {
-        Cohort::find($id)->delete($id);
+        Cohort::find($id)->delete();
         Student::where('cohort_id', '=', $id)->delete();
         Schedule::where('cohort_id','=',$id)->delete();
 

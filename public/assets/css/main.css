@@ -62,37 +62,36 @@ label
 /* Play With Box Settings */
 
 .box {
-    width: 150px;  /* content width */
-    max-width:150px;
+    width: 112px;  /* content width */
+    max-width:112px;
     cursor: move !important;
-    height: 100px;  /* content height */
-    padding: 20px;  /*space between content and border*/
-    margin: 20px;  /*space between border and other elements*/
+    height: 50px;  /* content height */
     border-radius:0px; /* round corners */
-    /* background-color:#F4F4F4; try red, orange, ...    */
-  }
+    font-size:11px;
+    margin:2px;
+    text-align: center;
+}
 
 /* DRAG AND DROP */
   main {
       display:table-cell;
       vertical-align:middle;
-      text-align:center;
   }
 
   .wrapper {
       width:auto;
       display:inline-block;
-      padding:15px;
       border:1px solid  black;
       background-color:white; /* try red, orange, ... */
-  }
-
+      padding:5px;
+    }
+/* .drop-mai */
   .wrapper-drop {
-    width: 200px;  /* content width */
-    max-width:200px;
-    height: 150px;  /* content height */
-    padding: 15px;
-    margin: 0 auto;
+    width: 125px;  /* content width */
+    max-width:125px;
+    height: 60px;  /* content height */
+    margin:0px;
+    display:inline-block;
     background-color:#ffffff;
     border: 1px solid black;
     transition: all ease-in-out 0.8s;

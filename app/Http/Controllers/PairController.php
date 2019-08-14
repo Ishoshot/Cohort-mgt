@@ -20,10 +20,11 @@ class PairController extends Controller
     public function index()
     {
         //
-        $date = date('l, m-F-Y');
+        $date = date('l, d-F-Y');
         $time = date('H:i A');
         $cohorts = Cohort::where('status', 1)->latest()->get();
-        return view('pair.index', compact('time','date', 'cohorts'));
+        $pairs = Pair::orderBy('cohort_id')->orderBy('topic_id')->orderBy('student_one_fname')->latest()->paginate(5);
+        return view('pair.index', compact('time','date', 'cohorts', 'pairs'));
     }
 
     /**
@@ -58,18 +59,19 @@ class PairController extends Controller
     public function fetch(Request $request)
     {
         // Display date and time
-        $date = date('l, m-F-Y');
+        $date = date('l, d-F-Y');
         $time = date('H:i A');
-        // dd($_SERVER['REMOTE_ADDR']);
-        // // Validate data requests
-        // $data = $request->validate([
-        //     'cohort' => 'required'
-        // ]);
+
+        // Validate data requests
+        $data = $request->validate([
+            'cohort' => 'required'
+        ]);
 
         $students = Student::where('cohort_id', '=', $request->cohort)->get();
+
         $track = Cohort::where('id', '=', $request->cohort)->first();
-        // dd($track);
         $track_id = $track->track_id;
+
         $topics = Topic::where('track_id', '=', $track_id)->get();
 
         return view('pair.pair', compact('students', 'topics', 'date', 'time'));
@@ -80,26 +82,62 @@ class PairController extends Controller
     public function mappairs(Request $request)
     {
 
-        // $input = $request->all();
-
         $cohort = Cohort::where('id', '=',$request->cohort_id)->first();
         $cohort_name = $cohort->name;
-
 
         $topic = Topic::where('id', '=', $request->topic_id)->first();
         $topic_title = $topic->title;
 
-        Pair::create([
-            'student_one' => $request->student_one,
-            'student_two' => $request->student_two,
-            'topic_id' => $request->topic_id,
-            'cohort_id' => $request->cohort_id,
-            'student_one_fname' => $request->student_one_fname,
-            'student_two_fname' => $request->student_two_fname,
-            'cohort_name' => $cohort_name,
-            'topic_title' => $topic_title
+       // CHECK IF STUDENTS HAVE BEEN PAIRED FOR THE TOPIC
+
+            $student_one = $request->student_one;
+            $student_two = $request->student_two;
+
+            $pairExist = Pair::where('topic_id', '=', $request->topic_id)
+                ->where(function ($query) use($student_one,$student_two)
+                {
+                    $query->where('student_one', '=', $student_one)
+                    ->where('student_two', '=', $student_two);
+            })->first();
+
+
+            if($pairExist)
+            {
+                $msgExists = [
+
+                    'success'=> true,
+
+                    'pairExists' => ' Oh No!! <b>'.$request->student_one_fname .' </b>& <b>'
+                    . $request->student_two_fname.' </b> already exists for <b>'.$topic_title.'</b>'
+                ];
+
+                return response()->json($msgExists);
+            }
+
+        //INSERT  PAIR &  NECCESARY DETAILS
+        $statusPair = Pair::create([
+                'student_one' => $request->student_one,
+                'student_two' => $request->student_two,
+                'topic_id' => $request->topic_id,
+                'cohort_id' => $request->cohort_id,
+                'student_one_fname' => $request->student_one_fname,
+                'student_two_fname' => $request->student_two_fname,
+                'cohort_name' => $cohort_name,
+                'topic_title' => $topic_title
         ]);
-        return response()->json(['success'=>'Pairing Done Successfully!!']);
+        if($statusPair)
+        {
+         $msg = [
+
+            'success'=> true,
+
+            'successmsg' => ' Done!! <b>'.$request->student_one_fname .' </b>& <b>'
+            . $request->student_two_fname.' </b> were successfully paired for <b>'.$topic_title.'</b>'
+        ];
+
+            return response()->json($msg);
+        }
+
 
     }
 
@@ -146,5 +184,10 @@ class PairController extends Controller
     public function destroy($id)
     {
         //
+        Pair::find($id)->delete();
+
+        return response()->json([
+            'success' => 'Record deleted successfully!'
+        ]);
     }
 }

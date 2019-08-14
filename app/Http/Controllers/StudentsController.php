@@ -11,7 +11,7 @@ class StudentsController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**;
      * Display a listing of the resource.
      *
@@ -20,7 +20,7 @@ class StudentsController extends Controller
     public function index()
     {
         //
-        $date = date('l, m-F-Y');
+        $date = date('l, d-F-Y');
         $time = date('H:i A');
 
         $cohorts = Cohort::where('status', 1)->latest()->get();
@@ -87,7 +87,7 @@ class StudentsController extends Controller
     public function show(Student $student)
     {
         //
-        $date = date('l, m-F-Y');
+        $date = date('l, d-F-Y');
         $time = date('H:i A');
 
         return view('students.show', compact('student','date','time'));
