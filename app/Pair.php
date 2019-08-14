@@ -8,7 +8,6 @@ class Pair extends Model
 {
     protected $guarded = [];
 
-    //
     public function cohort()
     {
         return $this->hasMany(Cohort::class);

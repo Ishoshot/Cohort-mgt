@@ -180,7 +180,7 @@
 
 
                     <div class="tab-pane fade" id="schedule" role="tabpanel" aria-labelledby="pills-schedule-tab">
-                        @if(!count($schedules))
+                        @if(!$schedules->count())
                         <div class="col-md-12 p-0 mb-3">
                             <div class="float-right">
                                <form method="POST" action="/schedule/generate/{{$cohort->id}}">
@@ -211,63 +211,121 @@
                             <tbody>
 
                                 @foreach ($schedules as $schedule)
+                                
                                 <form action="/topics/update/{{ $topic->id }}" method="POST">
                                     @csrf
                                     @method('PATCH')
-                                    <tr>
+                                    @if ($loop->first)
+                                        <tr>
 
-                                        <td>
-                                            {{ $schedule->title }}
-                                            <input type="hidden" name="title" value="{{ $schedule->title }}">
-                                        </td>
+                                            <td>
+                                                {{ $schedule->title }}
+                                                <input type="hidden" name="title" value="{{ $schedule->title }}">
+                                            </td>
 
-                                        <td class="text-center">
-                                            {{ $schedule->duration.' days' }}
-                                            <input type="hidden" name="duration" value="{{ $schedule->duration }}">
-                                        </td>
+                                            <td class="text-center">
+                                                {{ $schedule->duration.' days' }}
+                                                <input type="hidden" name="duration" value="{{ $schedule->duration }}">
+                                            </td>
 
-                                        <td class="text-center">
-                                            <div class="input-group start-date date">
-                                                <input id="start_date" type="text"
-                                                name="start_date" value="{{ $schedule->start_date }}"
-                                                class="form-control @error('start_date') is-invalid @enderror" autofocus
-                                                autocomplete="off"/>
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                            <td class="text-center">
+                                                <div class="input-group start-date date">
+                                                    <input id="start_date" type="text"
+                                                    name="start_date" value="{{ $schedule->start_date }}"
+                                                    class="form-control @error('start_date') is-invalid @enderror" autofocus
+                                                    autocomplete="off"/>
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            @error('start_date')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </td>
+                                                @error('start_date')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </td>
 
-                                        <td class="text-center">
-                                            <div class="input-group end-date date">
-                                                <input id="end_date" type="text"
-                                                name="end_date" value="{{ $schedule->end_date }}"
-                                                class="form-control @error('end_date') is-invalid @enderror"
-                                                autofocus autocomplete="off"/>
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                            <td class="text-center">
+                                                <div class="input-group end-date date">
+                                                    <input id="end_date" type="text"
+                                                    name="end_date" value="{{ $schedule->end_date }}"
+                                                    class="form-control @error('end_date') is-invalid @enderror"
+                                                    autofocus autocomplete="off"/>
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            @error('end_date')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </td>
+                                                @error('end_date')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </td>
 
-                                        <td>
-                                            <button class="btn btn-primary">
-                                                <i class="fa fa-save text-white"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                            <td>
+                                                <button class="btn btn-primary">
+                                                    <i class="fa fa-save text-white"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @else
+                                        <tr>
+
+                                            <td>
+                                                {{ $schedule->title }}
+                                                <input type="hidden" name="title" value="{{ $schedule->title }}">
+                                            </td>
+
+                                            <td class="text-center">
+                                                {{ $schedule->duration.' days' }}
+                                                <input type="hidden" name="duration" value="{{ $schedule->duration }}">
+                                            </td>
+
+                                            <td class="text-center">
+                                                <div class="input-group start-date date">
+                                                    <input id="start_date" type="text"
+                                                    name="start_date" value="{{ $schedule->start_date }}"
+                                                    class="form-control @error('start_date') is-invalid @enderror" autofocus
+                                                    autocomplete="off"/>
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+
+                                                @error('start_date')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </td>
+
+                                            <td class="text-center">
+                                                <div class="input-group end-date date">
+                                                    <input id="end_date" type="text"
+                                                    name="end_date" value="{{ $schedule->end_date }}"
+                                                    class="form-control @error('end_date') is-invalid @enderror"
+                                                    autofocus autocomplete="off"/>
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+
+                                                @error('end_date')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </td>
+
+                                            <td>
+                                                <button class="btn btn-primary">
+                                                    <i class="fa fa-save text-white"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endif
                                 </form>
                                 @endforeach
                             </tbody>

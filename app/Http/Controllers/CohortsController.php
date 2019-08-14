@@ -100,7 +100,7 @@ class CohortsController extends Controller
         $date = date('l, d-F-Y');
         $time = date('H:i A');
 
-        $schedules = Schedule::where('cohort_id', '=', $cohort->id)->get();
+        $schedules = $cohort->schedule;
 
         return view('cohorts.show', compact('cohort','date','time','schedules'));
     }

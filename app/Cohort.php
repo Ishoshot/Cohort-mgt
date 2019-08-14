@@ -15,7 +15,8 @@ class Cohort extends Model
     public function students(){
         return $this->hasMany(Student::class);
     }
+    
     public function schedule(){
-        return $this->hasOne(Schedule::class);
+        return $this->hasMany(Schedule::class);
     }
 }

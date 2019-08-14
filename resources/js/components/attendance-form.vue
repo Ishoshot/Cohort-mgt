@@ -31,6 +31,10 @@
                   </div>
                 </div>
 
+                <div v-if="pairInfo" class="blink">
+                    {{ pairInfo }}
+                </div>
+
 
             
 	            <div class="form-group mt-4">
@@ -80,12 +84,14 @@
 	
 </style>
 
+
 <script>
 export default {
   data() {
     return {
       cohorts:[],
       message: '',
+      pairInfo: '',
       success: '',
       username: '',
       cohort: '',
@@ -142,6 +148,10 @@ export default {
               this.success = (res.data['success']);
               this.message = '';
           }
+          if(res.data.pairInfo){
+              this.pairInfo = (res.data['pairInfo']);
+              this.message = '';
+          }
           this.username = '';
           this.cohort = '';
       })
@@ -151,6 +161,7 @@ export default {
           this.username = '';
           this.cohort = '';
         }
+        console.log(error)
       });
 
       // }

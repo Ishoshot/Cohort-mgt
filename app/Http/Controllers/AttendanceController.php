@@ -9,6 +9,7 @@ use App\Student;
 use App\Topic;
 use App\Track;
 use App\Attendance;
+use App\Pair;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\Cohort as CohortResource;
@@ -38,7 +39,6 @@ class AttendanceController extends Controller
         return CohortResource::collection($cohorts);
     }
 
-
     
     public function submit(Request $request) {
 
@@ -53,14 +53,14 @@ class AttendanceController extends Controller
 
         $cohort_id = $data['cohort'];
         
-        $cohort = Cohort::find($cohort_id);
+        $cohort = Cohort::findorfail($cohort_id);
 
-        $student = Student::where('username', '=', $username)->first();
-        
         if ($cohort->status !== 1) {
             $message = 'Oops! The Cohort selected is not active';
             return response()->json(['message'=> $message]);        
         }
+
+        $student = Student::where('username', '=', $username)->first();
 
         if (!$student) {
             $message = 'Invalid Username! Check your username and try again';
@@ -72,20 +72,21 @@ class AttendanceController extends Controller
             return response()->json(['message'=> $message]);       
         } 
 
-        //To get schedule 
-        $query = $cohort->schedule;
 
-        if ($query == null) {
-            $message = 'There was a problem while taking the Attendance! If problem persists, kindly call the attention of your co-ordinator.';
+        //To get schedule 
+        $schedule = $cohort->schedule;
+
+        if ($schedule == null) {
+            $message = '[Schedule] There was a problem while taking the Attendance! If problem persists, kindly call the attention of your co-ordinator.';
             return response()->json(['message' => $message]);
         }
 
-        //To get topic
-        $topic = $query->where('start_date', '<=', date('Y-m-d'))
+        //To get topic from schedule
+        $topic = $schedule->where('start_date', '<=', date('Y-m-d'))
             ->where('end_date', '>=', date('Y-m-d'))->first();
 
         if (!$topic) {
-            $message = 'There was a problem while taking the Attendance! If problem persists, kindly call the attention of your co-ordinator.';
+            $message = '[Topic] There was a problem while taking the Attendance! If problem persists, kindly call the attention of your co-ordinator.';
             return response()->json(['message' => $message]);
         }
 
@@ -98,22 +99,54 @@ class AttendanceController extends Controller
             return response()->json(['message' => $message]);
         }
 
+        // To fetch pair's details
+        
+        
+        $matchThese = [
+            'cohort_id' => $cohort->id,
+            'topic_title' => $topic->title,
+        ];
+
+        $pair = Pair::where($matchThese)
+            ->where(function ($query) use($user)
+            {
+                $query->where('student_one', '=', $user)
+                ->orWhere('student_two', '=', $user);
+            })
+            ->first();
+    
+        if (!$pair) {
+            $message = $student->lastname.", You have not been paired for today's topic yet, and cannot take Attendance. If problem persists, kindly call the attention of your co-ordinator.";
+            return response()->json(['message' => $message]);
+        }
+
+        if ($pair->student_one == $user) {
+            $pair_username = $pair->student_two;
+            $pair_fullname = $pair->student_two_fname;
+        }
+        else{
+            $pair_username = $pair->student_one;
+            $pair_fullname = $pair->student_one_fname;
+        }
+
         //Create/Insert to DB
         $status = Attendance::create([
         'student_id' => $student->id,
         'username' => $student->username,
-        'fullname' => $student->lastname.' '.$student->firstname,
-        'pair' => 'Folly',
-        'pair_fullname' => 'Adesanya Boiy',
+        'fullname' => $student->firstname.' '.$student->lastname,
+        'pair' => $pair_username,
+        'pair_fullname' => $pair_fullname,
         'topic' => $topic->title,
         'cohort' => $cohort->name,
         'system_ip' => $system_ip
         ]);
 
+
         //Response for Attendance
         if ($status) {
-        $success = $student->lastname.', You have successfully registered your attendance for today!';
-        return response()->json(['success' => $success]);
+        $success = $student->lastname.', You have successfully registered your attendance for today !';
+        $pairInfo = 'You have been paired with'.' '.$pair_fullname;
+        return response()->json(['success' => $success, 'pairInfo' => $pairInfo]);
         }
     
         // return response()->json(null, 200);
