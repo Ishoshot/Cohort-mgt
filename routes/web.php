@@ -56,4 +56,5 @@ Route::get('/students/{student}', 'StudentsController@show')->name('students.sho
 Route::get('/pair', 'PairController@index');
 Route::get('/pair/fetch', 'PairController@fetch')->name('pair.fetch');
 Route::post('/mappairs', 'PairController@mappairs')->name('pair.mappairs');
+Route::delete('/pair/{id}', 'PairController@destroy')->name('pair.destroy');
 

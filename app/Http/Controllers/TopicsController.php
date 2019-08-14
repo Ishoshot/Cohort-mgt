@@ -15,7 +15,7 @@ class TopicsController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +23,7 @@ class TopicsController extends Controller
      */
     public function index()
     {
-        $date = date('l, m-F-Y');
+        $date = date('l, d-F-Y');
         $time = date('H:i A');
 
         $tracks = Track::with('topics')->where('status', 1)->latest()->get();

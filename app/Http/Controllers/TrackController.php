@@ -13,7 +13,7 @@ class TrackController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +22,7 @@ class TrackController extends Controller
     public function index()
     {
         // Displays the current date and time
-        $date = date('l, m-F-Y');
+        $date = date('l, d-F-Y');
         $time = date('H:i A');
 
         // dd($request->ip());
