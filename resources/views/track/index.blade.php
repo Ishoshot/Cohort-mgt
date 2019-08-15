@@ -168,7 +168,7 @@
                 <h3 class="text-white"><i class ="fa fa-book"></i> Manage Tracks</h3>
             </div>
 
-            <div class="card-body" id="content">
+            <div class="card-body">
 
                 {{-- Checks if the table is empty --}}
                 @if(count($track) < 1)
@@ -242,8 +242,14 @@
 
         {{--  This div holds the table that displays list of topics for a selected track  --}}
         <div class="collapse" id="collapseTopics">
-            <div class="card">
+            <div class="alert show-alert alert-warning alert-dismissible fade show" role="alert">
+                <i class="fa fa-volume-up"></i>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>There are no topics yet !!! Newly created topics will appear here.
+            </div>
 
+               <div class="card" id="content">
                 <div class="card-body">
                     <table class="table">
                         <thead class="thead-light">
@@ -332,12 +338,22 @@
                 {
                     if(data.topics)
                     {
+                    $('#content').show();
                       for(var i=0; i < data.topics.length; i++)
                       {
                         $("#topic-data").append( $("<tr>"));
                         $("#topic-data").append( $("<td/>").text(data.topics[i].title) );
                         $("#topic-data").append( $("<td/>").text(data.topics[i].duration + " days") );
                         $("#topic-data").append( $("</tr>"));
+
+                        $('.show-alert').hide();
+
+                        }
+
+                      if(data.topics == '' )
+                      {
+                          $('#content').hide();
+                          $('.show-alert').show('slow');
                       }
                     }
                 }

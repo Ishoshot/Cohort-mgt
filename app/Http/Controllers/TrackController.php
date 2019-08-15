@@ -53,8 +53,7 @@ class TrackController extends Controller
     {
         // $topics = Topic::where('track_id', $request->id)->get();
         $topics = Topic::with('track')->where('track_id', $request->id)
-                        ->orderBy('track_id')->orderBy('index')
-                        ->get();
+                        ->orderBy('track_id')->get();
         return response()->json(['topics' => $topics]);
     }
 
