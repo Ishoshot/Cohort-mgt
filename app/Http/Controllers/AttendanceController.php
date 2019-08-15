@@ -107,6 +107,8 @@ class AttendanceController extends Controller
             'topic_title' => $topic->title,
         ];
 
+        $user = $student->username;
+
         $pair = Pair::where($matchThese)
             ->where(function ($query) use($user)
             {

@@ -147,12 +147,15 @@ export default {
           if(res.data.success){
               this.success = (res.data['success']);
               this.message = '';
+              this.username = '';
+              this.cohort = '';
           }
           if(res.data.pairInfo){
               this.pairInfo = (res.data['pairInfo']);
               this.message = '';
+              this.username = '';
+              this.cohort = '';
           }
-          this.username = '';
           this.cohort = '';
       })
       .catch(error => {

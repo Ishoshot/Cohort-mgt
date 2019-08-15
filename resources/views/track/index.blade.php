@@ -186,6 +186,7 @@
                         <th scope="col">Title</th>
                         <th scope="col">Created On</th>
                         <th scope="col" style="text-align:center;">Offered by</th>
+                        <th scope="col" style="text-align:center;">No of Topics</th>
                         <th scope="col" style="text-align:center;">Status</th>
                         <th colspan="2" scope="col" style="text-align:center;">Action</th>
                     </tr>
@@ -204,6 +205,10 @@
 
                     <td class="text-center">
                         {{ $tracks->cohorts->count() }}
+                    </td>
+
+                    <td class="text-center">
+                        {{ $tracks->topics->count() }}
                     </td>
 
                     <td class="text-center">

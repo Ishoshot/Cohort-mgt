@@ -255,6 +255,7 @@
             <table class="table">
                 <thead class="thead-dark">
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">Title</th>
                         <th scope="col">Track</th>
                         <th scope="col" style="text-align:center;">Duration</th>
@@ -265,6 +266,7 @@
                 <tbody>
                     @foreach ($topics as $topic)
                       <tr>
+                        <td>{{$topic->index}}</td>
                         <td>{{$topic->title}}</td>
 
                         <td>{{$topic->track->title}}</td>

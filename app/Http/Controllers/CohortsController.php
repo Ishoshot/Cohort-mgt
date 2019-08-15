@@ -100,6 +100,8 @@ class CohortsController extends Controller
         $date = date('l, d-F-Y');
         $time = date('H:i A');
 
+        // $schedules = Schedule::where('cohort_id', '=', $cohort->id)->paginate(5);
+
         $schedules = $cohort->schedule;
 
         return view('cohorts.show', compact('cohort','date','time','schedules'));
