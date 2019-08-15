@@ -3616,14 +3616,17 @@ __webpack_require__.r(__webpack_exports__);
         if (res.data.success) {
           _this2.success = res.data['success'];
           _this2.message = '';
+          _this2.username = '';
+          _this2.cohort = '';
         }
 
         if (res.data.pairInfo) {
           _this2.pairInfo = res.data['pairInfo'];
           _this2.message = '';
+          _this2.username = '';
+          _this2.cohort = '';
         }
 
-        _this2.username = '';
         _this2.cohort = '';
       })["catch"](function (error) {
         if (error.response.status === 422) {

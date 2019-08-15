@@ -44,6 +44,7 @@ Route::get('/cohorts/{cohort}', 'CohortsController@show')->name('cohorts.show');
 
 //Schedule
 Route::post('/schedule/generate/{id}', 'ScheduleController@generate')->name('schedule.generate');
+Route::post('/schedule/re-generate/{id}', 'ScheduleController@reGenerate')->name('schedule.reGenerate');
 
 
 // Students Route

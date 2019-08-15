@@ -8,6 +8,7 @@ use App\Topic;
 use App\Track;
 use App\Cohort;
 use App\Schedule;
+use Carbon\Carbon;
 
 
 class ScheduleController extends Controller
@@ -51,41 +52,90 @@ class ScheduleController extends Controller
     public function generate(Request $request)
     {
         //
+        
         $cohort = Cohort::findorfail($request->id);
-        $topics = $cohort->track->topics;
-        $dataSet = [];
-        $newStart_date = '';
+        $topics = Topic::where('track_id', '=', $cohort->track->id)->orderBy('index')->get();
+
+        $newStart_date = $cohort->start_date;
+
         foreach($topics as $topic)
         {
-            if($topic->first()) {
-                $start_date = strtotime($cohort->start_date);
-                // dd(($topic->duration));
-                $end_date = date('Y-m-d',$start_date)->addDays(2);
-            }
-            else{
+            // if($topic->first()) {
+            //     $start_date = Carbon::parse($cohort->start_date)->format('Y-m-d');
+            //     $end_date = Carbon::parse($start_date)->addDays($topic->duration)->format('Y-m-d');
+            // }
+            
+            // else{
                 $start_date = $newStart_date;
-                $end_date = $start_date + $topic->duration;
-            }
+                $end_date = Carbon::parse($start_date)->addDays($topic->duration)->format('Y-m-d');
+            // }
 
-            $newStart_date = $end_date + 1;
+            $newStart_date = Carbon::parse($end_date)->addDays(1)->format('Y-m-d');
 
-            $dataSet[] = [
+            Schedule::create([
             'cohort_id' => $request->id,
             'title' => $topic->title,
             'topic_id' => $topic->id,
             'duration' => $topic->duration,
             'track' => $cohort->track->title,
             'start_date' => $start_date,
-            'end_date' => $end_date,
-            ];
+            'end_date' => $end_date
+            ]);
         }
 
-        Schedule::insert($dataSet);
-
-         return redirect('/cohorts/'.$request->id);
-
+        return redirect('/cohorts/'.$request->id);
 
     }
+
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function reGenerate(Request $request)
+    {
+        $cohort = Cohort::findorfail($request->id);
+
+        Schedule::where('cohort_id', '=', $cohort->id)->truncate();
+        
+        $topics = Topic::where('track_id', '=', $cohort->track->id)->orderBy('index')->get();
+
+        $newStart_date = $cohort->start_date;
+
+        foreach($topics as $topic)
+        {
+            // if($topic->first()) {
+            //     $start_date = Carbon::parse($cohort->start_date)->format('Y-m-d');
+            //     $end_date = Carbon::parse($start_date)->addDays($topic->duration)->format('Y-m-d');
+            // }
+            
+            // else{
+                $start_date = $newStart_date;
+                $end_date = Carbon::parse($start_date)->addDays($topic->duration)->format('Y-m-d');
+            // }
+
+            $newStart_date = Carbon::parse($end_date)->addDays(1)->format('Y-m-d');
+
+            Schedule::create([
+            'cohort_id' => $request->id,
+            'title' => $topic->title,
+            'topic_id' => $topic->id,
+            'duration' => $topic->duration,
+            'track' => $cohort->track->title,
+            'start_date' => $start_date,
+            'end_date' => $end_date
+            ]);
+        }
+
+        return back();
+        
+    }
+
+
+
 
     /**
      * Display the specified resource.
