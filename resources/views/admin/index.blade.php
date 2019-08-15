@@ -86,9 +86,9 @@
 
 <div class="content mt-3">
 
-    <div class="col-md-12 text-center mb-2 mt-2">
+    <div class="col-md-12 text-center mb-2 mt-3">
 
-        <div class="card col-md-4 mt-5 p-3">
+        <div class="card col-md-4 mt-3 p-3">
             <div class="card-body bg-flat-color-0">
             <div class="div-square">
                 <a href="/track">
@@ -100,7 +100,7 @@
             </div>
         </div>
 
-        <div class="card col-md-4 mt-5 p-3">
+        <div class="card col-md-4 mt-3 p-3">
             <div class="card-body bg-flat-color-0">
             <div class="div-square">
                 <a href="/topics">
@@ -112,7 +112,7 @@
         </div>
         </div>
 
-        <div class="card col-md-4 mt-5 p-3">
+        <div class="card col-md-4 mt-3 p-3">
         <div class="card-body bg-flat-color-0">
             <div class="div-square">
                 <a href="/cohorts">
@@ -128,7 +128,7 @@
 
     <div class="col-md-12 text-center mt-2 mb-2">
 
-        <div class="card col-md-4 mt-5 p-3">
+        <div class="card col-md-4 p-3">
                 <div class="card-body bg-flat-color-0">
                 <div class="div-square">
                     <a href="/students">
@@ -140,7 +140,7 @@
             </div>
         </div>
 
-        <div class="card col-md-4 mt-5 p-3">
+        <div class="card col-md-4 p-3">
             <div class="card-body bg-flat-color-0">
             <div class="div-square">
                 <a href="/pair">
@@ -152,6 +152,19 @@
             </div>
         </div>
     </div>
+
+    <div class="card col-md-4  p-3">
+            <div class="card-body bg-flat-color-0">
+            <div class="div-square">
+                <a href="/attendance">
+                <i class="fa fa-check fa-5x"></i>
+                <h4 class="pt-4">ATTENDANCE</h4>
+                </a>
+                <div class="progress progress-xs mt-3 mb-0 bg-flat-color-5" style="width: 80%; height: 5px;"></div>
+            </div>
+        </div>
+    </div>
+
 
 </div>
 

@@ -15,6 +15,7 @@ Route::get('/', function () {
 	return view('attendance.welcome');
 });
 
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@home')->name('home');
@@ -59,3 +60,7 @@ Route::get('/pair/fetch', 'PairController@fetch')->name('pair.fetch');
 Route::post('/mappairs', 'PairController@mappairs')->name('pair.mappairs');
 Route::delete('/pair/{id}', 'PairController@destroy')->name('pair.destroy');
 
+//Attendance routes
+// Route::get('/attendance', 'AttendanceController@viewAttendance');
+Route::get('/attendance', 'AdminAttendanceController@index');
+Route::get('/viewAttendance', 'AdminAttendanceController@viewAttendance');

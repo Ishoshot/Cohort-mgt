@@ -28,7 +28,7 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
 
@@ -39,7 +39,7 @@ class AttendanceController extends Controller
         return CohortResource::collection($cohorts);
     }
 
-    
+
     public function submit(Request $request) {
 
         $data = $request->validate([
@@ -48,32 +48,32 @@ class AttendanceController extends Controller
         ]);
 
         $system_ip = $request->ip();
-        
+
         $username = trim($data['username']);
 
         $cohort_id = $data['cohort'];
-        
+
         $cohort = Cohort::findorfail($cohort_id);
 
         if ($cohort->status !== 1) {
             $message = 'Oops! The Cohort selected is not active';
-            return response()->json(['message'=> $message]);        
+            return response()->json(['message'=> $message]);
         }
 
         $student = Student::where('username', '=', $username)->first();
 
         if (!$student) {
             $message = 'Invalid Username! Check your username and try again';
-            return response()->json(['message'=> $message]);        
+            return response()->json(['message'=> $message]);
         }
 
         if ($student->cohort_id !== $cohort->id) {
             $message = 'Oops! You just selected the wrong cohort';
-            return response()->json(['message'=> $message]);       
-        } 
+            return response()->json(['message'=> $message]);
+        }
 
 
-        //To get schedule 
+        //To get schedule
         $schedule = $cohort->schedule;
 
         if ($schedule == null) {
@@ -100,8 +100,7 @@ class AttendanceController extends Controller
         }
 
         // To fetch pair's details
-        
-        
+
         $matchThese = [
             'cohort_id' => $cohort->id,
             'topic_title' => $topic->title,
@@ -116,7 +115,7 @@ class AttendanceController extends Controller
                 ->orWhere('student_two', '=', $user);
             })
             ->first();
-    
+
         if (!$pair) {
             $message = $student->lastname.", You have not been paired for today's topic yet, and cannot take Attendance. If problem persists, kindly call the attention of your co-ordinator.";
             return response()->json(['message' => $message]);
@@ -150,7 +149,7 @@ class AttendanceController extends Controller
         $pairInfo = 'You have been paired with'.' '.$pair_fullname;
         return response()->json(['success' => $success, 'pairInfo' => $pairInfo]);
         }
-    
+
         // return response()->json(null, 200);
     }
 
@@ -174,6 +173,15 @@ class AttendanceController extends Controller
     {
         //
     }
+
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
 
     /**
      * Display the specified resource.
