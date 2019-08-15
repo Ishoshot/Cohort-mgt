@@ -179,7 +179,7 @@
                                 <label for="start_date" class="col-form-label font-weight-bold">{{ __('Start date') }}</label><br/>
                                     <div class="input-group date start_date">
                                         <input id="start_date" type="text" name="start_date"
-                                        class="form-control @error('start_date') is-invalid @enderror" required autofocus/>
+                                        class="form-control @error('start_date') is-invalid @enderror" required autofocus autocomplete="off"/>
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar" aria-hidden="true"></i>
                                         </div>
@@ -202,7 +202,7 @@
 
                                     <div class="input-group date end_date">
                                         <input id="end_date" type="text" name="end_date"
-                                        class="form-control @error('end_date') is-invalid @enderror" required autofocus/>
+                                        class="form-control @error('end_date') is-invalid @enderror" required autofocus autocomplete="off" />
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar" aria-hidden="true"></i>
                                         </div>
@@ -423,7 +423,7 @@
             autoclose: true,
             daysOfWeekDisabled: [0, 6],
             todayHighlight: true,
-            format: "dd-mm-yyyy",
+            format: "yyyy-mm-dd",
             startDate: "0d",
             todayBtn:true
         });
@@ -432,7 +432,7 @@
             autoclose: true,
             daysOfWeekDisabled: [0, 6],
             todayHighlight: true,
-            format: "dd-mm-yyyy",
+            format: "yyyy-mm-dd",
             todayBtn:true
         });
     </script>

@@ -310,8 +310,7 @@
         autoclose: true,
         daysOfWeekDisabled: [0, 6],
         todayHighlight: true,
-        format: "yyyy-mm-dd",
-        startDate: '0d'
+        format: "yyyy-mm-dd"
     });
 
     $('.input-group.end-date').datepicker({
