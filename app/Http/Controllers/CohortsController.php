@@ -9,7 +9,7 @@ use App\Cohort;
 use App\Track;
 use App\Student;
 use App\Schedule;
-
+use DateTime;
 
 class CohortsController extends Controller
 {
@@ -64,24 +64,38 @@ class CohortsController extends Controller
 
     public function store(Request $request)
     {
-        // $date =
 
         $data = $request->validate([
             'name' => ['required','min:5','string','unique:cohorts'],
             'track' => ['required'],
             'start_date' => ['required','date'],
-            'end_date' => ['required','date','after:start_date'],
-            'duration' => ['required'],
             'status' => ['required'],
             'location' => ['required'],
         ]);
+
+        // Get the total Duration for the Topics for this Cohort inorder to append to the end_date
+        $Topicsduration = Topic::where('track_id', '=' ,$data['track'])->sum('duration');
+
+        // The will automatically get the end_date using the start_date and topics_duration
+        $end_date = date('Y-m-d', strtotime($data['start_date']. ' + '.intval($Topicsduration).' days'));
+
+        // Converting end_date to a date
+        $e_date = new DateTime($end_date);
+
+        // Converting start_date to a date
+        $s_date = new DateTime($data['start_date']);
+
+        // Get the Duration in months for the Cohort
+        $duration = ($e_date->diff($s_date)->m);
+
+        // The above line of code was to not allow the Schedule for a Cohort greater than its Duration
 
         Cohort::create([
             'name' => $data['name'],
             'track_id' => $data['track'],
             'start_date' => $data['start_date'],
-            'end_date' => $data['end_date'],
-            'duration' => $data['duration'],
+            'end_date' => $end_date,
+            'duration' => $duration,
             'status' => $data['status'],
             'location' => $data['location']
         ]);

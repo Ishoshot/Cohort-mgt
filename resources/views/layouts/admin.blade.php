@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{--  TITLE  --}}
-    <title>{{ config('app.name', 'fofxAcademy') }}</title>
+    <title>fofxAcademy</title>
 
     {{--  <!-- Fonts -->  --}}
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

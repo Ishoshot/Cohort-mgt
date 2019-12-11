@@ -174,7 +174,7 @@
 
                         <div class="form-row">
 
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
 
                                 <label for="start_date" class="col-form-label font-weight-bold">{{ __('Start date') }}</label><br/>
                                     <div class="input-group date start_date">
@@ -196,68 +196,22 @@
 
                             </div>
 
-
-                            <div class="form-group col-md-4">
-                                <label for="end_date" class="col-form-label font-weight-bold">{{ __('End date') }}</label><br/>
-
-                                    <div class="input-group date end_date">
-                                        <input id="end_date" type="text" name="end_date"
-                                        class="form-control @error('end_date') is-invalid @enderror" required autofocus autocomplete="off" />
-                                        <div class="input-group-addon">
-                                            <i class="fa fa-calendar" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-
-                                    <div class="invalid-feedback">
-                                        Please pick an end date
-                                    </div>
-
-                                @error('end_date')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-
-                            <div class="form-group col-md-4">
-                                <label for="duration" class="col-form-label font-weight-bold">{{ __('Duration') }}</label>
-
-                                <select name="duration" id="durationn"
-                                class="form-control @error('duration') is-invalid @enderror" required>
-                                    <option value="">~ Please Select Duration in Months ~</option>
-                                    @for ($i = 3; $i <= 12 ; $i++)
-                                        <option value="{{ $i." months" }}">{{ $i." months" }}</option>
-                                    @endfor
-                                </select>
-
-                                <div class="invalid-feedback">
-                                    Please select a duration
+                            <div class="form-group col-md-6">
+                                <label for="track" class="col-form-label font-weight-bold">{{ __('Status') }}</label>
+                                <br/>
+                                <div class="col-md-6">
+                                    <input type="radio" class="form-radio" name="status"
+                                    Value="1" checked> <label for="active_track">Active</label>
                                 </div>
 
-                                @error('duration')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <div class="col-md-6">
+                                    <input type="radio" class="form-radio" name="status"
+                                        Value="0"> <label for="inactive_track">InActive</label>
+                                </div>
                             </div>
 
                         </div>
 
-
-                        <div class="form-group">
-                            <label for="track" class="col-form-label font-weight-bold">{{ __('Status') }}</label>
-                            <br/>
-                            <div class="d-inline">
-                                <input type="radio" class="form-radio" name="status"
-                                Value="1" checked> <label for="active_track">Active</label>
-                            </div>
-
-                            <div class="ml-5 d-inline">
-                                <input type="radio" class="form-radio" name="status"
-                                    Value="0"> <label for="inactive_track">InActive</label>
-                            </div>
-                        </div>
 
                         <div class="modal-footer d-flex row pt-4 justify-content-between">
                             <div class="ml-3">
@@ -322,7 +276,7 @@
                         {{ $cohort->end_date }}
                     </td>
 
-                    <td>{{ $cohort->duration }}</td>
+                    <td>{{ $cohort->duration }} {{"months"}}</td>
 
                     <td class="text-center">
                         <form>

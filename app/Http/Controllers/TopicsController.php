@@ -136,7 +136,7 @@ class TopicsController extends Controller
     public function destroy($id)
     {
         Topic::find($id)->delete($id);
-        Schedule::where('topic_id', '=', $id)->delete();
+        // Schedule::where('topic_id', '=', $id)->delete();
 
         return response()->json([
          'success' => 'Record deleted successfully!'

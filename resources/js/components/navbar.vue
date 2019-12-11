@@ -10,13 +10,11 @@
             </el-col>
             <el-col :span="12" style="text-align:right;" class="d-none d-xl-block">
                 <div class="grid-content">
-                    <span style="font-size:20px;">Date || Time</span>
+                    <span style="font-size:20px;">{{date}} || <span style="font-size:20px;" id="txt"></span></span>
                     <el-dropdown>
                         <i class="el-icon-setting ml-5" style="font-size:20px;color:#fff;"></i>
                         <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>View</el-dropdown-item>
-                        <el-dropdown-item>Add</el-dropdown-item>
-                        <el-dropdown-item>Delete</el-dropdown-item>
+                        <el-dropdown-item>View Attendance</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
                 </div>
@@ -45,5 +43,45 @@
 </style>
 
 <script>
+export default {
+        data(){
+            return{
+                date: '',
+            }
+        },
 
+        mounted(){
+            setInterval(this.startTime, 1000);
+            this.startTime();
+            this.getDate();
+        },
+
+        methods:{
+            getDate(){
+                var date = new Date();
+
+                return this.date = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
+            },
+
+            startTime() {
+                var today = new Date();
+                var h = today.getHours();
+                var m = today.getMinutes();
+                var s = today.getSeconds();
+                m = this.checkTime(m);
+                s = this.checkTime(s);
+                document.getElementById('txt').innerHTML =
+                h + ":" + m + ":" + s;
+            },
+
+            checkTime(i) {
+                if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+                return i;
+            }
+        },
+    }
 </script>
+
+  function newFunction() {
+    console.log("gh");
+  }

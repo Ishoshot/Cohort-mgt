@@ -199,8 +199,8 @@
                         </div>
                         @else
                         <table class="table table-hover">
-                           
-                            @if($schedules->count() < $cohort->track->topics->count())
+
+                            @if($schedules->count() != $cohort->track->topics->count())
                             <div class="col-md-12 alert alert-warning alert-dismissible fade show" role="alert">
                                 <i class="fa fa-volume-up"></i>
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -208,21 +208,20 @@
                                 </button>
                                 This Schedule is a commit behind.
                                 <form method="POST" action="/schedule/re-generate/{{$cohort->id}}" class="d-inline">
-                                    @csrf                        
+                                    @csrf
                                     <button class="btn btn-secondary">
                                         <i class="fa fa-undo"></i> Re-generate
                                     </button>
                                 </form>
                             </div>
                             @endif
-                           
+
                             <thead class="bg-light">
                                 <tr>
                                     <th scope="col">Title</th>
                                     <th scope="col" class="text-center">Duration</th>
                                     <th scope="col" class="text-center">Start date</th>
                                     <th scope="col" class="text-center">Finish date</th>
-                                    <th scope="col" class="text-center"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -230,11 +229,7 @@
                                 @foreach ($schedules as $schedule)
 
                                 {{-- /topics/update/{{ $topic->id }} --}}
-                                
-                                <form action="" method="POST">
-                                    @csrf
-                                    @method('PATCH')
-                                    
+
                                     <tr>
 
                                         <td>
@@ -252,7 +247,7 @@
                                                 <input id="start_date" type="text"
                                                 name="start_date" value="{{ $schedule->start_date }}"
                                                 class="form-control @error('start_date') is-invalid @enderror" autofocus
-                                                autocomplete="off"/>
+                                                autocomplete="off" disabled/>
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar" aria-hidden="true"></i>
                                                 </div>
@@ -270,7 +265,7 @@
                                                 <input id="end_date" type="text"
                                                 name="end_date" value="{{ $schedule->end_date }}"
                                                 class="form-control @error('end_date') is-invalid @enderror"
-                                                autofocus autocomplete="off"/>
+                                                autofocus autocomplete="off" disabled/>
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar" aria-hidden="true"></i>
                                                 </div>
@@ -282,14 +277,7 @@
                                                 </span>
                                             @enderror
                                         </td>
-
-                                        <td>
-                                            <button class="btn btn-primary">
-                                                <i class="fa fa-save text-white"></i>
-                                            </button>
-                                        </td>
                                     </tr>
-                                </form>
                                 @endforeach
                             </tbody>
                         </table>
@@ -306,19 +294,19 @@
 
 <script>
 
-    $('.input-group.start-date').datepicker({
-        autoclose: true,
-        daysOfWeekDisabled: [0, 6],
-        todayHighlight: true,
-        format: "yyyy-mm-dd"
-    });
+    // $('.input-group.start-date').datepicker({
+    //     autoclose: true,
+    //     daysOfWeekDisabled: [0, 6],
+    //     todayHighlight: true,
+    //     format: "yyyy-mm-dd"
+    // });
 
-    $('.input-group.end-date').datepicker({
-        autoclose: true,
-        daysOfWeekDisabled: [0, 6],
-        todayHighlight: true,
-        format: "yyyy-mm-dd"
-    });
+    // $('.input-group.end-date').datepicker({
+    //     autoclose: true,
+    //     daysOfWeekDisabled: [0, 6],
+    //     todayHighlight: true,
+    //     format: "yyyy-mm-dd"
+    // });
 
     // $('#start_date').change(function() {
     //     var date = $(this).val();
