@@ -153,6 +153,38 @@ class AttendanceController extends Controller
         // return response()->json(null, 200);
     }
 
+    public function getPairedStudents(Request $request){
+
+        $data = $request->validate([
+             'cohort' => ['required']
+         ]);
+
+         $cohort_id = $data['cohort'];
+
+         //To get schedule
+         $cohort = Cohort::findorfail($cohort_id);
+         $schedule = $cohort->schedule;
+
+         //To get topic from schedule
+         $topic = $schedule->where('start_date', '<=', date('Y-m-d'))
+             ->where('end_date', '>=', date('Y-m-d'))->first();
+
+        // Get Paired Students
+         $pairedStudents = Pair::where('cohort_id', '=', $cohort_id)
+             ->where('topic_id', '=', $topic->id)->get();
+
+         if (count($pairedStudents) > 0) {
+             return response()->json(['pairedStudents' => $pairedStudents]);
+         }
+
+    }
+
+    public function mapPair(Request $request){
+        [$one, $two] = $request->pairs;
+
+        return $one;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -227,4 +259,30 @@ class AttendanceController extends Controller
     {
         //
     }
+
+    public function loadCohorts()
+    {
+        $cohorts = Cohort::where('status', 1)->latest()->get();
+
+        return response()->json(['cohorts' => $cohorts]);
+
+    }
+
+
+    public function getData(Request $request)
+    {
+
+        $students = Student::where('cohort_id', '=', $request->cohort)->get();
+
+        $track = Cohort::where('id', '=', $request->cohort)->first();
+
+        $track_id = $track->track_id;
+
+        $topics = Topic::where('track_id', '=', $track_id)->get();
+
+        return response()->json(['students' => $students, 'topics' => $topics]);
+
+    }
+
+
 }

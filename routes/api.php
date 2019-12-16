@@ -23,3 +23,18 @@ Route::get('cohorts', 'AttendanceController@cohort');
 
 // Take Attendance
 Route::post('submit', 'AttendanceController@submit');
+
+// Load Cohorts
+Route::get('loadCohorts', 'AttendanceController@loadCohorts');
+
+// GetData For Pairing
+Route::post('getdata', 'AttendanceController@getData');
+
+// Get Paired Students
+Route::post('getPairedStudents', 'AttendanceController@getPairedStudents');
+
+// Map Pair
+Route::post('mapPair', 'AttendanceController@mapPair');
+
+
+

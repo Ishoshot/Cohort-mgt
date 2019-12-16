@@ -25,6 +25,9 @@
     },
     "dependencies": {
         "air-datepicker": "^2.2.3",
-        "element-ui": "^2.11.1"
+        "element-ui": "^2.11.1",
+        "tailwindcss": "^1.1.4",
+        "vue-feather-icons": "^5.0.0",
+        "vuedraggable": "^2.23.2"
     }
 }

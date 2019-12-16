@@ -81,7 +81,3 @@ export default {
         },
     }
 </script>
-
-  function newFunction() {
-    console.log("gh");
-  }

@@ -4,11 +4,11 @@
 
 		<el-main>
         <div class="row justify-content-center" style="margin-top:6%;">
-          	
+
             <div class="jumbotron col-md-6">
-            
+
             <form @submit.prevent="submit">
-    
+
             <div class="mb-4">
             	<h3>Complete to Take Attendance</h3>
             </div>
@@ -36,15 +36,15 @@
                 </div>
 
 
-            
+
 	            <div class="form-group mt-4">
 	            	<el-input class="col-md-12 p-0" placeholder="Please enter your Username" name="username" suffix-icon="el-icon-user" id="username" v-model="username" clearable>
                 </el-input>
                 <div v-if="errors && errors.username[0]" class="text-danger">{{ errors.username[0] }}</div>
 	            </div>
-          
+
               <div class="form-group mt-4">
-                <el-select class="col-md-12 p-0" placeholder="Select Cohort" v-model="cohort" 
+                <el-select class="col-md-12 p-0" placeholder="Select Cohort" v-model="cohort"
                 name="cohort" id="cohort" clearable>
                   <el-option
                     v-for="cohort in cohorts"
@@ -60,16 +60,16 @@
                 <input type="reset" class="btn btn-danger" value="Reset">
 	              <button type="submit" class="btn btn-primary">Take Attendance</button>
 	            </div>
-                
-          
+
+
           </form>
-          
+
           </div>
-        
+
         </div>
-    
+
     </el-main>
-	
+
   </div>
 
 </template>
@@ -81,7 +81,7 @@
 	background-color:rgba(225,225,225,0);
 	box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.5);
 }
-	
+
 </style>
 
 
@@ -107,7 +107,7 @@ export default {
   },
 
   methods:{
-  	
+
     fetchCohorts(){
   		fetch('api/cohorts')
   		.then(res => res.json())
@@ -168,11 +168,11 @@ export default {
       });
 
       // }
-      
+
     },
 
 
   }
 
-}; 
+};
 </script>

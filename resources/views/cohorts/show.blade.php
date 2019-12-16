@@ -165,7 +165,7 @@
                             <tbody>
                                 @foreach ($cohort->students as $student)
                                     <tr>
-                                        <td>{{ $student->firstname .' '. $student->firstname }}</td>
+                                        <td>{{ $student->firstname .' '. $student->lastname }}</td>
                                         <td>{{ $student->email }}</td>
                                         <td class="text-center">{{ $student->phone }}</td>
                                         <td class="text-center">
