@@ -32,6 +32,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
 Vue.component('component-pair', require('./ComponentPair.vue').default);
+Vue.component('pair-pool', require('./PairPool.vue').default);
 Vue.component('student', require('./Students.vue').default);
 Vue.component('navbar', require('./components/navbar.vue').default);
 Vue.component('attendance-form', require('./components/attendance-form.vue').default);

@@ -182,7 +182,76 @@ class AttendanceController extends Controller
     public function mapPair(Request $request){
         [$one, $two] = $request->pairs;
 
-        return $one;
+        $cohort = Cohort::where('id', '=',$request->cohort_id)->first();
+        $cohort_name = $cohort->name;
+
+        $topic = Topic::where('id', '=', $request->topic_id)->first();
+        $topic_title = $topic->title;
+
+       // GET STUDENTS DETAILS
+
+        $student_one = $one['username'];
+        $student_one_fname = $one['firstname']." ".$one['lastname'];
+
+        $student_two = $two['username'];
+        $student_two_fname = $two['firstname']." ".$two['lastname'];
+
+        // STUDENTS ONE EXISTS
+        $StudentOneExist = Pair::where('topic_id', '=', $request->topic_id)
+            ->where(function ($query) use($student_one)
+            {
+                $query->where('student_one', '=', $student_one)
+                ->orWhere('student_two', '=', $student_one);
+        })->first();
+
+        if($StudentOneExist)
+        {
+            $StudentOneExist = [
+                'message'=> " Oops!!! $student_one_fname have been paired with another Student on $topic_title"
+            ];
+
+            return response()->json($StudentOneExist);
+        }
+
+
+        // STUDENT TWO EXISTS
+        $StudentTwoExist = Pair::where('topic_id', '=', $request->topic_id)
+            ->where(function ($query) use($student_two)
+            {
+                $query->where('student_one', '=', $student_two)
+                ->orWhere('student_two', '=', $student_two);
+        })->first();
+
+        if($StudentTwoExist)
+        {
+            $StudentTwoExist = [
+                'message'=> "Oops!!! $student_two_fname have been paired with another Student for $topic_title"
+            ];
+
+            return response()->json($StudentTwoExist);
+        }
+
+        //INSERT  PAIR &  NECCESARY DETAILS
+        $statusPair = Pair::create([
+            'student_one' => $student_one,
+            'student_two' => $student_two,
+            'topic_id' => $request->topic_id,
+            'cohort_id' => $request->cohort_id,
+            'student_one_fname' => $student_one_fname,
+            'student_two_fname' => $student_two_fname,
+            'cohort_name' => $cohort_name,
+            'topic_title' => $topic_title
+        ]);
+
+        if($statusPair)
+        {
+         $msg = [
+            'success' => "Done!!! $student_one_fname & $student_two_fname were successfully paired for $topic_title"
+        ];
+
+            return response()->json($msg);
+        }
+
     }
 
     /**

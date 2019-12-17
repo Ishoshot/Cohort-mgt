@@ -1,3 +1,43 @@
+.topic-radio
+{
+    -webkit-appearance: none;
+     -moz-appearance: none;
+     appearance: none;
+     display: inline-block;
+     position: relative;
+     background-color: #da3f34;
+     color: #fff;
+     top: 8px;
+     height: 20px;
+     width: 20px;
+     border: 0;
+     border-radius: 50px;
+     cursor: pointer;
+     margin-right: 7px;
+     outline: none;
+}
+.topic-radio:checked::before
+{
+     position: absolute;
+     font: 9px/1 'Open Sans', sans-serif;
+     left: 7.5px;
+     top: 5px;
+     content: '\02143';
+     transform: rotate(40deg);
+}
+.topic-radio:hover
+{
+     background-color: #666;
+     color:#fff;
+     transition: 1s all;
+}
+.topic-radio:checked
+{
+     background-color: #2c85d8;
+     color:#fff;
+}
+
+
 html{
      overflow-x:hidden !important;
 }
