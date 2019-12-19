@@ -52,7 +52,7 @@ class ScheduleController extends Controller
     public function generate(Request $request)
     {
         //
-        
+
         $cohort = Cohort::findorfail($request->id);
         $topics = Topic::where('track_id', '=', $cohort->track->id)->orderBy('index')->get();
 
@@ -64,7 +64,7 @@ class ScheduleController extends Controller
             //     $start_date = Carbon::parse($cohort->start_date)->format('Y-m-d');
             //     $end_date = Carbon::parse($start_date)->addDays($topic->duration)->format('Y-m-d');
             // }
-            
+
             // else{
                 $start_date = $newStart_date;
                 $end_date = Carbon::parse($start_date)->addDays($topic->duration)->format('Y-m-d');
@@ -100,7 +100,7 @@ class ScheduleController extends Controller
         $cohort = Cohort::findorfail($request->id);
 
         Schedule::where('cohort_id', '=', $cohort->id)->truncate();
-        
+
         $topics = Topic::where('track_id', '=', $cohort->track->id)->orderBy('index')->get();
 
         $newStart_date = $cohort->start_date;
@@ -111,7 +111,7 @@ class ScheduleController extends Controller
             //     $start_date = Carbon::parse($cohort->start_date)->format('Y-m-d');
             //     $end_date = Carbon::parse($start_date)->addDays($topic->duration)->format('Y-m-d');
             // }
-            
+
             // else{
                 $start_date = $newStart_date;
                 $end_date = Carbon::parse($start_date)->addDays($topic->duration)->format('Y-m-d');
@@ -131,7 +131,7 @@ class ScheduleController extends Controller
         }
 
         return back();
-        
+
     }
 
 

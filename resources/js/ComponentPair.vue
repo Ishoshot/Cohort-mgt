@@ -1,5 +1,8 @@
 <template>
-    <div class="container-fluid p-2">
+<div>
+
+    <div class="container-fluid p-2" @click="clearPairMessage">
+
 
         <div v-if="message">
             <div class="alert alert-danger alert-dismissible fade show text-justify" role="alert">
@@ -31,16 +34,18 @@
 
         </div>
 
+        <vcl-code rows="6" secondary="#e8e8e8" primary="#e8ecf1" class="mt-5" v-if="loading"></vcl-code>
 
-        <div class="mt-5" v-show="showOthers">
+
+        <div class="mt-5 p-2" v-show="showOthers">
 
 
-            <draggable tag="div"
+            <draggable tag="div" class="tw-border row tw-md:p-5 tw-p-2 tw-bg-gray-200 text-center"
                     group="students"
                     ghost-class="tw-moving-card"
                     :list="students"
                     :animation="200"
-                    :move="checkMove" class="tw-border row tw-md:p-5 tw-p-2 tw-bg-gray-200 text-center">
+                    :move="checkMove" @end="maxPair" @start="clearPairMessage">
                 <student v-for="student in students"
                         :student="student"
                         :key="student.id">
@@ -56,7 +61,7 @@
                             group="students"
                         ghost-class="tw-moving-card"
                         :list="pairs"
-                        :animation="200">
+                        :animation="200" @start="clearPairMessage">
                     <pair-pool v-for="pair in pairs"
                             :student="pair"
                             :key="pair.id">
@@ -64,6 +69,17 @@
                 </draggable>
 
                 <button class="mt-3 btn btn-primary rounded" @click="mapPair" :disabled="this.pairs.length < 2 || this.send.topic == '' ">PAIR</button>
+
+                <div v-if="pairMessage" style="position:absolute; top:35px; left:0px; width:100%;">
+                    <div class="alert alert-warning alert-dismissible fade show text-justify" role="alert">
+                    {{ pairMessage }}
+                    <span class="tw-cursor-pointer badge badge-pill badge-dark" @click="showAgain = false">Don't Show this Again</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                </div>
+
             </div>
 
 
@@ -71,7 +87,7 @@
             <div class="radio col-sm-6 mt-5">
                 <label class="font-weight-bold">Choose a Topic: </label>
                 <div v-for="topic in topics" :key="topic.id" >
-                    <input class="topic-radio mb-1" v-model="send.topic" checked="checked" type="radio" name="" :value="topic.id" id=""> {{ topic.title }}
+                    <input @click="clearPairMessage" class="topic-radio mb-1" v-model="send.topic" checked="checked" type="radio" name="" :value="topic.id" id=""> {{ topic.title }}
                 </div>
             </div>
 
@@ -80,18 +96,22 @@
 
 
     </div>
+
+</div>
 </template>
 
 
 <script>
 import draggable from 'vuedraggable';
 import student from './Students.vue';
+import { VclCode } from 'vue-content-loading';
 
     export default {
         name: "component-pair",
 
         components: {
             draggable,
+            VclCode,
         },
 
         mounted() {
@@ -104,8 +124,11 @@ import student from './Students.vue';
                     cohort: '',
                     topic: '',
                 },
+                loading: false,
+                showAgain: true,
                 message: '',
                 success: '',
+                pairMessage: '',
                 showOthers: false,
                 cohorts:[],
                 pairs:[],
@@ -128,6 +151,18 @@ import student from './Students.vue';
             checkMove() {
                 if (this.pairs.length >= 2){
                     return false;
+                }
+            },
+
+            clearPairMessage(){
+                if(this.pairMessage.length > 1){
+                    this.pairMessage = "";
+                }
+            },
+
+            maxPair(){
+                if(this.showAgain && this.pairs.length > 1){
+                    this.pairMessage = "Maximum of 2 [two] Students are required for Pairing. Don't forget to Choose a topic";
                 }
             },
 
@@ -157,24 +192,32 @@ import student from './Students.vue';
 
             onCohort(){
                 if(event.target.value.trim() != ""){
-                    this.getPairedStudents();
-                    axios.post('/api/getdata',{
-                        'cohort': this.send.cohort
-                    })
-                    .then(res => {
-                        if(res.data.topics){
-                            this.topics = res.data.topics;
-                        }
-                        if(res.data.students){
-                            this.students = res.data.students;
-                        }
-                        this.showOthers = true;
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
+                    this.showOthers = false;
+                    this.loading = true;
+                    this.message = '';
+                    this.success = '';
+                    // this.getPairedStudents();
+                    setTimeout(()=>{
+                        axios.post('/api/getdata',{
+                            'cohort': this.send.cohort
+                        })
+                        .then(res => {
+                            this.loading = false;
+                            if(res.data.topics){
+                                this.topics = res.data.topics;
+                            }
+                            if(res.data.students){
+                                this.students = res.data.students;
+                            }
+                            this.showOthers = true;
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                    }, 1000);
                 }
-                else{
+                else
+                {
                     return;
                 }
             },

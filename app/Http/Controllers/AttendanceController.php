@@ -32,12 +32,15 @@ class AttendanceController extends Controller
     }
 
 
+
     public function cohort()
     {
         $cohorts = Cohort::all();
 
         return CohortResource::collection($cohorts);
     }
+
+
 
 
     public function submit(Request $request) {
@@ -56,7 +59,7 @@ class AttendanceController extends Controller
         $cohort = Cohort::findorfail($cohort_id);
 
         if ($cohort->status !== 1) {
-            $message = 'Oops! The Cohort selected is not active';
+            $message = 'Oops! [Inactive] The Cohort selected does not have permissions for Attendance. If problem persists, kindly call the attention of your co-ordinator. ';
             return response()->json(['message'=> $message]);
         }
 
@@ -76,7 +79,7 @@ class AttendanceController extends Controller
         //To get schedule
         $schedule = $cohort->schedule;
 
-        if ($schedule == null) {
+        if (!(count($schedule) > 0)) {
             $message = '[Schedule] There was a problem while taking the Attendance! If problem persists, kindly call the attention of your co-ordinator.';
             return response()->json(['message' => $message]);
         }
@@ -153,6 +156,9 @@ class AttendanceController extends Controller
         // return response()->json(null, 200);
     }
 
+
+
+
     public function getPairedStudents(Request $request){
 
         $data = $request->validate([
@@ -178,6 +184,9 @@ class AttendanceController extends Controller
          }
 
     }
+
+
+
 
     public function mapPair(Request $request){
         [$one, $two] = $request->pairs;
@@ -253,6 +262,7 @@ class AttendanceController extends Controller
         }
 
     }
+
 
     /**
      * Show the form for creating a new resource.

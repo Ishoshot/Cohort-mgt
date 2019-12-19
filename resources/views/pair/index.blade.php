@@ -73,59 +73,13 @@
 
 
 <div class="content mt-3">
-    {{-- BUTTON FOR MODAL POPUP --}}
+    {{-- LINK TO MAPPING PAIR --}}
     <div class="col-sm-12">
-        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
+        <a type="button" href="/pairing" class="btn btn-primary float-right">
         {{ 'Map Pair' }} <i class="fa fa-plus"></i>
-        </button>
+        </a>
     </div>
 
-    {{-- <!-- Modal --> --}}
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title font-weight-bold" style="color:#000;" id="exampleModalLabel">{{ 'Pair New Students' }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-        <div class="modal-body py-4">
-            <form action="/pair/fetch" class="needs-validation" novalidate id="form1" method="GET">
-                <div class="form-group">
-                    <label for="cohort" class="col-form-label font-weight-bold">{{ __('Which Cohort Does The Students You Want To Pair Belong To?') }}</label>
-                        <select name="cohort"
-                        class="form-control @error('cohort') is-invalid @enderror" required>
-                            <option value="">~ Please Select Cohort ~</option>
-                            @foreach ($cohorts as $cohort)
-                                <option value="{{ $cohort->id }}">{{ $cohort->name }}</option>
-                            @endforeach
-                        </select>
-                        <div class="invalid-feedback">
-                            Please select a cohort
-                        </div>
-                        @error('cohort')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                </div>
-
-                
-                <div class="modal-footer d-flex row pt-4 justify-content-between">
-                    <div class="ml-3">
-                        <button class="btn btn-primary">Pair Students</button>
-                    </div>
-                    <div class="mr-3">
-                        <button class="btn btn-danger" type="reset">Reset</button>
-                    </div>
-                </div>
-            </form>
-         </div>
-       </div>
-    </div>
-</div>
 
     {{--  TABLE TO DISPLAY ALL RECORDS IN COHORTS TABLES  --}}
     <div class="col-md-12 mb-2 mt-3">

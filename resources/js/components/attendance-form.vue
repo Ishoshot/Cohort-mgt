@@ -56,10 +56,11 @@
                  <div v-if="errors && errors.cohort[0]" class="text-danger">{{ errors.cohort[0] }}</div>
               </div>
 
-	            <div class="form-group d-flex mt-5 justify-content-between">
+            <div class="form-group d-flex mt-5 justify-content-between">
                 <input type="reset" class="btn btn-danger" value="Reset">
-	              <button type="submit" class="btn btn-primary">Take Attendance</button>
-	            </div>
+                <button type="submit" class="btn btn-primary">Take Attendance</button>
+            </div>
+
 
 
           </form>
