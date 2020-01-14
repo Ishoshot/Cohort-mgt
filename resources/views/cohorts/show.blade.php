@@ -108,7 +108,7 @@
                             <p>Track status: {{ $cohort->status }}</p>
                             <p>Active from: {{ $cohort->start_date .' to '. $cohort->end_date }}</p>
                             <p>Number of Students: {{ count($cohort->students) }}</p>
-                            <p>Duration: {{ $cohort->duration }}</p>
+                            <p>Duration: {{ $cohort->duration }} months</p>
                             <p>Location: {{ $cohort->location }}</p>
                             <p>Created on: {{ $cohort->created_at->format('l, M-Y @ H:i A') }}</p>
                         </div>

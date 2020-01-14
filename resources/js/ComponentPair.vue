@@ -26,9 +26,9 @@
 
             <div class="col-sm-6">
                 <label class="font-weight-bold">Choose a Cohort: </label>
-                <select v-model="send.cohort" v-for="cohort in cohorts" :key="cohort.id" class="form-control" name="" id="" @change="onCohort()">
-                    <option value="">~ Select a Cohort ~</option>
-                    <option :value="cohort.id">{{ cohort.name }}</option>
+                <select v-model="send.cohort" class="form-control" @change="onCohort()">
+                    <option value="" selected disabled>~ Select a Cohort ~</option>
+                    <option v-for="cohort in cohorts" :key="cohort.id" :value="cohort.id">{{ cohort.name }}</option>
                 </select>
             </div>
 

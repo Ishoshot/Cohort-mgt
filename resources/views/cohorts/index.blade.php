@@ -276,7 +276,7 @@
                         {{ $cohort->end_date }}
                     </td>
 
-                    <td>{{ $cohort->duration }} {{"months"}}</td>
+                    <td>{{ $cohort->duration }} {{"month(s)"}}</td>
 
                     <td class="text-center">
                         <form>

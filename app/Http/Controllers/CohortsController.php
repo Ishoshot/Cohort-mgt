@@ -88,6 +88,8 @@ class CohortsController extends Controller
         // Get the Duration in months for the Cohort
         $duration = ($e_date->diff($s_date)->m);
 
+        // dd($Topicsduration, $end_date, $e_date, $s_date, $duration);
+
         // The above line of code was to not allow the Schedule for a Cohort greater than its Duration
 
         Cohort::create([
