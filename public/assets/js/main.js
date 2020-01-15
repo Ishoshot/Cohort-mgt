@@ -58,6 +58,8 @@ jQuery(document).ready(function($) {
     }, false);
   })();
 
+
+  
   function allowDrop(ev) {
     ev.preventDefault();
     }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddDatesToSchedule extends Migration
+class AddTitleToSchedule extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,7 @@ class AddDatesToSchedule extends Migration
     public function up()
     {
         Schema::table('schedules', function (Blueprint $table) {
-            // $table->string('title')->unique()->change();
-            $table->string('start_date');
-            $table->string('end_date');
+            $table->string('topic_id');
         });
     }
 
@@ -27,7 +25,7 @@ class AddDatesToSchedule extends Migration
      */
     public function down()
     {
-        Schema::table('schedules', function (Blueprint $table) {
+        Schema::table('schedule', function (Blueprint $table) {
             //
         });
     }

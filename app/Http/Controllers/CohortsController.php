@@ -10,6 +10,7 @@ use App\Track;
 use App\Student;
 use App\Schedule;
 use DateTime;
+use PHPUnit\Framework\Constraint\Count;
 
 class CohortsController extends Controller
 {
@@ -76,8 +77,13 @@ class CohortsController extends Controller
         // Get the total Duration for the Topics for this Cohort inorder to append to the end_date
         $Topicsduration = Topic::where('track_id', '=', $data['track'])->sum('duration');
 
+        //Add some days to the end date based on the topics count
+        $Topicscount = Topic::where('track_id', '=', $data['track'])->get();
+
+        $totalCount = count($Topicscount) - 1;
+
         // The will automatically get the end_date using the start_date and topics_duration
-        $end_date = date('Y-m-d', strtotime($data['start_date'] . ' + ' . intval($Topicsduration) . ' days'));
+        $end_date = date('Y-m-d', strtotime($data['start_date'] . ' + ' . intval($Topicsduration + $totalCount) . ' days'));
 
         // Converting end_date to a date
         $e_date = new DateTime($end_date);

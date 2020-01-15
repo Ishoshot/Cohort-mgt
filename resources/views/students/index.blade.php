@@ -303,15 +303,45 @@
 
 </div>
 
+    {{-- SELECT COHORT TO SHOW STUDENTS --}}
+    <div class="row align-items-center d-flex justify-content-right text-dark">
+        <div class="col-sm-6">
+        <form class="needs-validation picktopic" novalidate>
+            <div class="form-group topic">
+                <label for="topic" class="col-form-label font-weight-bold">{{ __('Pair for topic') }}</label>
+                    <select name="topic"
+                        class="form-control pairfor @error('topic') is-invalid @enderror" required>
+                        <option value="">~ Please Select Topic ~</option>
+                        @foreach ($cohorts as $cohort)
+                            <option value="{{ $cohort->id }}">{{ $cohort->name }}</option>
+                        @endforeach
+                    </select>
+                <div class="invalid-feedback">
+                    Please select a topic
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
 
-{{--    --}}
+    {{--    --}}
 
 <div class="col-md-12 mb-2 mt-3">
     <div class="card">
         <div class="card-header bg-primary">
-            <h3 class="text-white">
-                <i class="fa fa-list"></i> {{ 'Manage Students  ' }}
-            </h3>
+           <div class="row">
+               <div class="col-6">
+                    <h3 class="text-white">
+                        <i class="fa fa-list"></i> {{ 'Manage Students  ' }}
+                    </h3>
+               </div>
+
+               <div class="col-6">
+                    <h3 class="text-white">
+                        <i class="fa fa-list"></i> {{ 'Manage Students  ' }}
+                    </h3>
+               </div>
+           </div>
         </div>
 
         <div class="card-body" id="content">
