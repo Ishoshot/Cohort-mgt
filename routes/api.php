@@ -37,4 +37,5 @@ Route::post('getPairedStudents', 'AttendanceController@getPairedStudents');
 Route::post('mapPair', 'AttendanceController@mapPair');
 
 
-
+// Notify For Attendance [Electron]
+Route::get('/checkAttendance', 'AttendanceController@NotifyToTakeAttendance');

@@ -32,7 +32,7 @@ class CohortsController extends Controller
 
         $cohorts = Cohort::orderBy('track_id')->orderBy('name')->latest()->paginate(5);
 
-        return view('cohorts.index',compact('date','time','tracks','cohorts'));
+        return view('cohorts.index', compact('date', 'time', 'tracks', 'cohorts'));
     }
 
     /**
@@ -58,7 +58,7 @@ class CohortsController extends Controller
         $change->status = $request->status;
         $change->save();
 
-        return response()->json(['success'=>'Status change successfully.']);
+        return response()->json(['success' => 'Status change successfully.']);
     }
 
 
@@ -66,18 +66,18 @@ class CohortsController extends Controller
     {
 
         $data = $request->validate([
-            'name' => ['required','min:5','string','unique:cohorts'],
+            'name' => ['required', 'min:5', 'string', 'unique:cohorts'],
             'track' => ['required'],
-            'start_date' => ['required','date'],
+            'start_date' => ['required', 'date'],
             'status' => ['required'],
             'location' => ['required'],
         ]);
 
         // Get the total Duration for the Topics for this Cohort inorder to append to the end_date
-        $Topicsduration = Topic::where('track_id', '=' ,$data['track'])->sum('duration');
+        $Topicsduration = Topic::where('track_id', '=', $data['track'])->sum('duration');
 
         // The will automatically get the end_date using the start_date and topics_duration
-        $end_date = date('Y-m-d', strtotime($data['start_date']. ' + '.intval($Topicsduration).' days'));
+        $end_date = date('Y-m-d', strtotime($data['start_date'] . ' + ' . intval($Topicsduration) . ' days'));
 
         // Converting end_date to a date
         $e_date = new DateTime($end_date);
@@ -120,7 +120,7 @@ class CohortsController extends Controller
 
         $schedules = $cohort->schedule;
 
-        return view('cohorts.show', compact('cohort','date','time','schedules'));
+        return view('cohorts.show', compact('cohort', 'date', 'time', 'schedules'));
     }
 
     /**
@@ -157,10 +157,10 @@ class CohortsController extends Controller
     {
         Cohort::find($id)->delete();
         Student::where('cohort_id', '=', $id)->delete();
-        Schedule::where('cohort_id','=',$id)->delete();
+        Schedule::where('cohort_id', '=', $id)->delete();
 
-         return response()->json([
-             'success' => 'Record deleted successfully!'
-         ]);
+        return response()->json([
+            'success' => 'Record deleted successfully!'
+        ]);
     }
 }
